@@ -1,21 +1,28 @@
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
 public class Consultation {
+
+    // Attributs
 
     private int id;
     private int date;
     private String antecedents;
     private Patient patient;
+    int cb = 0;
 
     ArrayList<Consultation> listeConsultation = new ArrayList<Consultation>();
 
-    public Consultation(int id, int date, String antecedents, Patient patient) {
-        this.id = id;
+    // Constructeurs
+
+    public Consultation(int date, String antecedents, Patient patient) {
+        cb++;
+        this.id = cb;
         this.date = date;
         this.antecedents = antecedents;
         this.patient = patient;
     }
+
+    // Getters and setters
 
     public int getId() {
         return id;
@@ -40,4 +47,8 @@ public class Consultation {
     public void setAntecedents(String antecedents) {
         this.antecedents = antecedents;
     }
+
+    // Methodes
+
+
 }
