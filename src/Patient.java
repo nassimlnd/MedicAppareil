@@ -9,6 +9,7 @@ public class Patient {
 
     private int id;
     private String nom;
+    private int datedenaissance;
     private ArrayList<Consultation> listeConsultationPatient;
     int cb = 0;
 
@@ -16,12 +17,15 @@ public class Patient {
 
     // Constructeur
 
-    public Patient(String nom) {
+    public Patient(String nom, String datedenaissance) {
         //cb++;
         //this.id = cb;
         try {
             this.setId();
             this.nom = nom;
+            if (datedenaissance.length() > 8) {
+                throw new NumberFormatException();
+            }
             this.listeConsultationPatient = new ArrayList<Consultation>();
             File file = new File("patient.txt");
 
@@ -56,6 +60,9 @@ public class Patient {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        catch (NumberFormatException exception2) {
+            System.out.println("Date de naissance incorrecte.");
         }
 
     }
