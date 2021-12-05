@@ -1,6 +1,7 @@
+import Exceptions.PatientNotFoundException;
+
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Patient {
@@ -120,6 +121,32 @@ public class Patient {
     }
 
     // Methodes
+
+    public static String getPatient(int id) throws PatientNotFoundException {
+        FileReader fileReader;
+        Scanner sc;
+        try {
+            fileReader = new FileReader("patient.txt");
+            sc = new Scanner(fileReader);
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String[] split = line.split("-");
+                if (Integer.parseInt(split[0]) == id) {
+                    System.out.println(split[1]);
+                    return split[1];
+                }
+                else throw new PatientNotFoundException();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Patient introuvable");;
+        }
+        finally {
+            return null;
+        }
+
+
+    }
 
 
 }
