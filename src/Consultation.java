@@ -6,7 +6,7 @@ public class Consultation {
 
     // Attributs
 
-    private int id;
+    private int id = 0;
     private String date;
     private String description;
     private Patient patient;
@@ -40,14 +40,14 @@ public class Consultation {
     public void setId() throws IOException {
         FileReader fileReader;
         Scanner sc;
-        File file = new File("patient.txt");
+        File file = new File("consultation.txt");
 
         if (file.exists()) {
-            fileReader = new FileReader("patient.txt");
+            fileReader = new FileReader("consultation.txt");
             sc = new Scanner(fileReader);
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                String[] split = line.split("-");
+                String[] split = line.split(";");
                 try {
                     this.id = Integer.parseInt(split[0]) + 1;
                 } catch (NumberFormatException e) {

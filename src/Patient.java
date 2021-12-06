@@ -65,7 +65,7 @@ public class Patient {
                 sc = new Scanner(fileReader);
                 while (sc.hasNextLine()) {
                     String line = sc.nextLine();
-                    String[] split = line.split("-");
+                    String[] split = line.split(";");
                     try {
                         this.id = Integer.parseInt(split[0]) + 1;
                     } catch (NumberFormatException e) {
