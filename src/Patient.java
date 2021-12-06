@@ -10,60 +10,40 @@ public class Patient {
 
     private int id;
     private String nom;
-    private int datedenaissance;
+    private String dateNaissance;
+    private String nbSecuriteSociale;
     private ArrayList<Consultation> listeConsultationPatient;
-    int cb = 0;
+    //int cb = 0;
 
     static ArrayList<Patient> listePatient = new ArrayList<Patient>();
 
     // Constructeur
 
-    public Patient(String nom, String datedenaissance) {
+    public Patient(String nom, String dateNaissance, String nbSecuriteSociale) {
         //cb++;
         //this.id = cb;
         try {
             this.setId();
             this.nom = nom;
-            if (datedenaissance.length() > 8) {
-                throw new NumberFormatException();
+
+            String[] date = dateNaissance.split("/");
+
+            if (date[0].length() != 2 || date[1].length() != 2 || date[2].length() != 4) {
+                throw new NumberFormatException("Date de naissance incorrecte.");
+            } else if (String.valueOf(nbSecuriteSociale).length() != 13) {
+                throw new NumberFormatException("Numéro de sécurité sociale incorrect.");
             }
+
+            this.dateNaissance = dateNaissance;
+
+            this.nbSecuriteSociale = nbSecuriteSociale;
+
             this.listeConsultationPatient = new ArrayList<Consultation>();
-            File file = new File("patient.txt");
 
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            FileReader fileReader = new FileReader(file.getAbsoluteFile());
-            Scanner sc = new Scanner(fileReader);
-
-            boolean contains = false;
-
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                if (line.toLowerCase().contains(this.nom.toLowerCase())) {
-                    contains = true;
-                }
-            }
-
-            fileReader.close();
-
-            if (contains == false) {
-                FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(this.getId() + "-" + this.getNom() + "\n");
-                bufferedWriter.close();
-                fileWriter.close();
-            }
-            else {
-                System.out.println("Patient déjà existant.");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            this.ajouterPatient();
         }
-        catch (NumberFormatException exception2) {
-            System.out.println("Date de naissance incorrecte.");
+        catch (NumberFormatException | IOException numberFormatException) {
+            System.out.println(numberFormatException.getMessage());
         }
 
     }
@@ -120,9 +100,25 @@ public class Patient {
         this.listeConsultationPatient = listeConsultationPatient;
     }
 
+    public String getNbSecuriteSociale() {
+        return nbSecuriteSociale;
+    }
+
+    public void setNbSecuriteSociale(String nbSecuriteSociale) {
+        this.nbSecuriteSociale = nbSecuriteSociale;
+    }
+
+    public String getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(String dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
     // Methodes
 
-    public static String getPatient(int id) throws PatientNotFoundException {
+    public static void getPatient(String nbSecuriteSociale) throws PatientNotFoundException {
         FileReader fileReader;
         Scanner sc;
         try {
@@ -131,21 +127,61 @@ public class Patient {
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                String[] split = line.split("-");
-                if (Integer.parseInt(split[0]) == id) {
+                String[] split = line.split(";");
+                if (split[3].equals(nbSecuriteSociale)) {
                     System.out.println(split[1]);
-                    return split[1];
                 }
                 else throw new PatientNotFoundException();
             }
         } catch (FileNotFoundException e) {
             System.out.println("Patient introuvable");;
         }
-        finally {
-            return null;
+
+
+    }
+
+    void ajouterPatient() {
+        try {
+
+            File file = new File("patient.txt");
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileReader fileReader = new FileReader(file.getAbsoluteFile());
+            Scanner sc = new Scanner(fileReader);
+
+            boolean contains = false;
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                if (line.toLowerCase().contains(this.getNom().toLowerCase()) || line.toLowerCase().contains(this.getDateNaissance())) {
+                    contains = true;
+                }
+            }
+
+            fileReader.close();
+
+            if (contains == false) {
+                FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write(this.getId() + ";" + this.getNom() + ";" + this.getDateNaissance() + ";" + this.getNbSecuriteSociale() + "\n");
+                bufferedWriter.close();
+                fileWriter.close();
+                listePatient.add(this);
+            } else {
+                System.out.println("Patient déjà existant.");
+            }
+
         }
+        catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
 
-
+    void ajouterConsultation(Consultation consultation) {
+        this.listeConsultationPatient.add(consultation);
     }
 
 
