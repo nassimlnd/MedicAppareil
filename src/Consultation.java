@@ -1,3 +1,5 @@
+import Exceptions.ConsultationNotFoundException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -127,6 +129,13 @@ public class Consultation {
         catch (IOException ioException) {
             ioException.printStackTrace();
         }
+    }
+
+    void supprimerConsultation(Patient patient) throws ConsultationNotFoundException {
+        if (patient.getListeConsultationPatient().contains(this)) {
+            patient.supprimerConsulation(this);
+        }
+        else throw new ConsultationNotFoundException();
     }
 
 

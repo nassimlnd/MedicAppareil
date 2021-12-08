@@ -13,30 +13,19 @@ public class Patient {
     private String dateNaissance;
     private String nbSecuriteSociale;
     private ArrayList<Consultation> listeConsultationPatient;
-    //int cb = 0;
 
     static ArrayList<Patient> listePatient = new ArrayList<Patient>();
 
     // Constructeur
 
     public Patient(String nom, String dateNaissance, String nbSecuriteSociale) {
-        //cb++;
-        //this.id = cb;
+
         try {
             this.setId();
             this.nom = nom;
 
-            String[] date = dateNaissance.split("/");
-
-            if (date[0].length() != 2 || date[1].length() != 2 || date[2].length() != 4) {
-                throw new NumberFormatException("Date de naissance incorrecte.");
-            } else if (String.valueOf(nbSecuriteSociale).length() != 13) {
-                throw new NumberFormatException("Numéro de sécurité sociale incorrect.");
-            }
-
-            this.dateNaissance = dateNaissance;
-
-            this.nbSecuriteSociale = nbSecuriteSociale;
+            this.setDateNaissance(dateNaissance);
+            this.setNbSecuriteSociale(nbSecuriteSociale);
 
             this.listeConsultationPatient = new ArrayList<Consultation>();
 
@@ -105,6 +94,10 @@ public class Patient {
     }
 
     public void setNbSecuriteSociale(String nbSecuriteSociale) {
+        if (String.valueOf(nbSecuriteSociale).length() != 13) {
+            throw new NumberFormatException("Numéro de sécurité sociale incorrect.");
+        }
+
         this.nbSecuriteSociale = nbSecuriteSociale;
     }
 
@@ -113,6 +106,11 @@ public class Patient {
     }
 
     public void setDateNaissance(String dateNaissance) {
+        String[] date = dateNaissance.split("/");
+
+        if (date[0].length() != 2 || date[1].length() != 2 || date[2].length() != 4) {
+            throw new NumberFormatException("Date de naissance incorrecte.");
+        }
         this.dateNaissance = dateNaissance;
     }
 
@@ -182,6 +180,35 @@ public class Patient {
 
     void ajouterConsultation(Consultation consultation) {
         this.listeConsultationPatient.add(consultation);
+    }
+
+    void supprimerConsulation(Consultation consultation) {
+        this.listeConsultationPatient.remove(consultation);
+    }
+
+    void modifierPatient() {
+        System.out.println("Que souhaitez vous modifier ? n pour le nom, d pour la date de naissance, et s pour le numéro de sécurité social.");
+        Scanner sc = new Scanner(System.in);
+        char choix = sc.nextLine().charAt(0);
+
+        switch (choix) {
+            case 'n' :
+                System.out.println("Veuillez saisir le nouveau nom du patient :");
+                String n = sc.nextLine();
+                this.setNom(n);
+                break;
+            case 'd' :
+                System.out.println("Date de naissance ?");
+                String date = sc.nextLine();
+                this.setDateNaissance(date);
+                break;
+            case 's' :
+                System.out.println("Numéro de sécurité sociale :");
+                String nbSecu = sc.nextLine();
+                this.setNbSecuriteSociale(nbSecu);
+                break;
+        }
+
     }
 
 
