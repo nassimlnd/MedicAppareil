@@ -73,15 +73,6 @@ public class MenuFrame extends JFrame {
             contentPaneAddPatient.add(textFieldNom);
             textFieldNom.setColumns(10);
 
-            JButton btnAddPatient2 = new JButton("Ajouter le patient");
-            btnAddPatient2.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            btnAddPatient2.setBounds(170, 275, 126, 43);
-            contentPaneAddPatient.add(btnAddPatient2);
-
             labelDateDeNaissance = new JLabel("Date de naissance");
             labelDateDeNaissance.setBounds(120, 100, 250, 14);
             contentPaneAddPatient.add(labelDateDeNaissance);
@@ -108,6 +99,22 @@ public class MenuFrame extends JFrame {
 
             list.setBounds(550, 35, 350, 320);
             contentPaneAddPatient.add(list);
+
+            JButton btnAddPatient2 = new JButton("Ajouter le patient");
+            btnAddPatient2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e1) {
+                    String nom = textFieldNom.getText();
+                    String dateNaissance = formattedTextFieldDate.getText();
+                    String nbSecuriteSociale = textFieldNbSecuriteSociale.getText();
+                    textFieldNom.setText("");
+                    formattedTextFieldDate.setText("");
+                    textFieldNbSecuriteSociale.setText("");
+                    new Patient(nom, dateNaissance, nbSecuriteSociale);
+                }
+            });
+            btnAddPatient2.setBounds(170, 275, 126, 43);
+            contentPaneAddPatient.add(btnAddPatient2);
+
         } catch (ParseException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();

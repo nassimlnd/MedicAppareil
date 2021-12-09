@@ -31,7 +31,7 @@ public class Patient {
 
             this.listeConsultationPatient = new ArrayList<Consultation>();
 
-            this.ajouterPatientListe();
+            this.ajouterPatientFichier();
         }
         catch (NumberFormatException | IOException numberFormatException) {
             System.out.println(numberFormatException.getMessage());
@@ -172,7 +172,7 @@ public class Patient {
 
     }
 
-    void ajouterPatientListe() {
+    void ajouterPatientFichier() {
         try {
 
             File file = new File("patient.txt");
@@ -260,8 +260,9 @@ public class Patient {
         }
     }
 
-    void ajouterPatient(String nom, String dateNaissance, String nbSecuriteSociale) {
-        
+    public static void ajouterPatient(String nom, String dateNaissance, String nbSecuriteSociale) {
+        new Patient(nom, dateNaissance, nbSecuriteSociale);
+
     }
 
 
