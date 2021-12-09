@@ -74,6 +74,14 @@ public class AddPatientFrame extends JFrame {
 
             list.setBounds(550, 35, 350, 320);
             contentPaneAddPatient.add(list);
+            
+            JButton btnRetourMenu = new JButton("Retourner au Menu");
+            btnRetourMenu.addActionListener(new ActionListener() {
+            	public void actionPerformed(ActionEvent e) {
+            	}
+            });
+            btnRetourMenu.setBounds(50, 393, 220, 30);
+            contentPaneAddPatient.add(btnRetourMenu);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

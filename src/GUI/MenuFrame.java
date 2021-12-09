@@ -32,6 +32,7 @@ public class MenuFrame extends JFrame {
             contentPaneMenu.setBorder(new EmptyBorder(5, 5, 5, 5));
             setContentPane(contentPaneMenu);
             contentPaneMenu.setLayout(null);
+            this.setResizable(false);
 
             JLabel labelTitre = new JLabel("Menu d'agent d'administration");
             labelTitre.setBounds(395, 11, 186, 14);
@@ -41,6 +42,7 @@ public class MenuFrame extends JFrame {
             btnAddPatient.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     contentPaneMenu.setVisible(false);
+                    contentPaneAddPatient.setVisible(true);
                     setContentPane(contentPaneAddPatient);
                 }
             });
@@ -92,6 +94,7 @@ public class MenuFrame extends JFrame {
             contentPaneAddPatient.add(textFieldNbSecuriteSociale);
             textFieldNbSecuriteSociale.setColumns(10);
 
+            Patient.initList();
             list.setModel(model);
             for (Patient patient: Patient.listePatient) {
                 model.addElement(patient);
@@ -110,10 +113,26 @@ public class MenuFrame extends JFrame {
                     formattedTextFieldDate.setText("");
                     textFieldNbSecuriteSociale.setText("");
                     new Patient(nom, dateNaissance, nbSecuriteSociale);
+                    model.removeAllElements();
+                    for (Patient patient: Patient.listePatient) {
+                        model.addElement(patient);
+                    }
+
                 }
             });
             btnAddPatient2.setBounds(170, 275, 126, 43);
             contentPaneAddPatient.add(btnAddPatient2);
+            
+            JButton btnRetourMenu = new JButton("Retourner au Menu");
+            btnRetourMenu.addActionListener(new ActionListener() {
+            	public void actionPerformed(ActionEvent e) {
+            		contentPaneAddPatient.setVisible(false);
+                    contentPaneMenu.setVisible(true);
+                    setContentPane(contentPaneMenu);
+            	}
+            });
+            btnRetourMenu.setBounds(50, 393, 220, 30);
+            contentPaneAddPatient.add(btnRetourMenu);
 
         } catch (ParseException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
             // TODO Auto-generated catch block

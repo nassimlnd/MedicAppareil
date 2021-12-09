@@ -31,7 +31,7 @@ public class Patient {
 
             this.listeConsultationPatient = new ArrayList<Consultation>();
 
-            this.ajouterPatientFichier();
+            this.ajouterPatient();
         }
         catch (NumberFormatException | IOException numberFormatException) {
             System.out.println(numberFormatException.getMessage());
@@ -41,11 +41,13 @@ public class Patient {
 
     public Patient(String id, String nom, String dateNaissance, String nbSecuriteSociale) {
         try {
-            this.id = Integer.parseInt(id);
+            this.setId();
             this.nom = nom;
             this.dateNaissance = dateNaissance;
             this.nbSecuriteSociale = nbSecuriteSociale;
-        } catch (NumberFormatException e) {
+            this.listeConsultationPatient = new ArrayList<Consultation>();
+            this.ajouterPatient();
+        } catch (NumberFormatException | IOException e) {
             e.printStackTrace();
         }
 
@@ -141,13 +143,7 @@ public class Patient {
 
     @Override
     public String toString() {
-        return "Patient{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", dateNaissance='" + dateNaissance + '\'' +
-                ", nbSecuriteSociale='" + nbSecuriteSociale + '\'' +
-                ", listeConsultationPatient=" + listeConsultationPatient +
-                '}';
+        return nom + dateNaissance;
     }
 
     public static void getPatient(String nbSecuriteSociale) throws PatientNotFoundException {
@@ -165,6 +161,7 @@ public class Patient {
                 }
                 else throw new PatientNotFoundException();
             }
+            sc.close();
         } catch (FileNotFoundException e) {
             System.out.println("Patient introuvable");;
         }
@@ -172,7 +169,7 @@ public class Patient {
 
     }
 
-    void ajouterPatientFichier() {
+    void ajouterPatient() {
         try {
 
             File file = new File("patient.txt");
