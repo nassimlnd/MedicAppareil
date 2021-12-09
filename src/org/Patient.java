@@ -1,3 +1,5 @@
+package org;
+
 import Exceptions.PatientNotFoundException;
 
 import java.io.*;
@@ -14,7 +16,7 @@ public class Patient {
     private String nbSecuriteSociale;
     private ArrayList<Consultation> listeConsultationPatient;
 
-    static ArrayList<Patient> listePatient = new ArrayList<Patient>();
+    public static ArrayList<Patient> listePatient = new ArrayList<Patient>();
 
     // Constructeur
 
@@ -29,10 +31,22 @@ public class Patient {
 
             this.listeConsultationPatient = new ArrayList<Consultation>();
 
-            this.ajouterPatient();
+            this.ajouterPatientListe();
         }
         catch (NumberFormatException | IOException numberFormatException) {
             System.out.println(numberFormatException.getMessage());
+        }
+
+    }
+
+    public Patient(String id, String nom, String dateNaissance, String nbSecuriteSociale) {
+        try {
+            this.id = Integer.parseInt(id);
+            this.nom = nom;
+            this.dateNaissance = dateNaissance;
+            this.nbSecuriteSociale = nbSecuriteSociale;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
     }
@@ -114,7 +128,27 @@ public class Patient {
         this.dateNaissance = dateNaissance;
     }
 
+    public static ArrayList<Patient> getListePatient() {
+        return listePatient;
+    }
+
+    public static void setListePatient(ArrayList<Patient> listePatient) {
+        Patient.listePatient = listePatient;
+    }
+
     // Methodes
+
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", dateNaissance='" + dateNaissance + '\'' +
+                ", nbSecuriteSociale='" + nbSecuriteSociale + '\'' +
+                ", listeConsultationPatient=" + listeConsultationPatient +
+                '}';
+    }
 
     public static void getPatient(String nbSecuriteSociale) throws PatientNotFoundException {
         FileReader fileReader;
@@ -138,7 +172,7 @@ public class Patient {
 
     }
 
-    void ajouterPatient() {
+    void ajouterPatientListe() {
         try {
 
             File file = new File("patient.txt");
@@ -168,8 +202,6 @@ public class Patient {
                 bufferedWriter.close();
                 fileWriter.close();
                 listePatient.add(this);
-            } else {
-                System.out.println("Patient déjà existant.");
             }
 
         }
@@ -209,6 +241,27 @@ public class Patient {
                 break;
         }
 
+    }
+
+    public static void initList() {
+        FileReader fileReader;
+        Scanner sc;
+        try {
+            fileReader = new FileReader("patient.txt");
+            sc = new Scanner(fileReader);
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String[] split = line.split(";");
+                listePatient.add(new Patient(split[0], split[1], split[2], split[3]));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Patient introuvable");;
+        }
+    }
+
+    void ajouterPatient(String nom, String dateNaissance, String nbSecuriteSociale) {
+        
     }
 
 

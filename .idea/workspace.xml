@@ -2,10 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8aa4deb6-3837-47c5-b380-cb39ec1eecb1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Exceptions/ConsultationNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/syntheticaSimple2D.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/AddPatientFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GUI/MenuFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Consultation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Consultation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicAppareil.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MedicAppareil.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consultation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/consultation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patient.txt" beforeDir="false" afterPath="$PROJECT_DIR$/patient.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Consultation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/Consultation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Statistiques.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/Statistiques.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,9 +49,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/OneDrive - Université de Tours/Workspace/MedicAppareil" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/syntheticaSimple2D.jar" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15136719" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -88,5 +97,19 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/org/Patient.java</url>
+          <line>245</line>
+          <properties class="org.Patient" method="initList">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

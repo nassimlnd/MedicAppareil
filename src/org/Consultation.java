@@ -1,3 +1,5 @@
+package org;
+
 import Exceptions.ConsultationNotFoundException;
 
 import java.io.*;
@@ -122,7 +124,7 @@ public class Consultation {
                 listeConsultation.add(this);
                 patient.ajouterConsultation(this);
             } else {
-                System.out.println("Consultation déjà existante.");
+                System.out.println("org.Consultation déjà existante.");
             }
 
         }
