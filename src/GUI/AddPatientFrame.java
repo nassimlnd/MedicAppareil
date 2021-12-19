@@ -39,15 +39,6 @@ public class AddPatientFrame extends JFrame {
             contentPaneAddPatient.add(textFieldNom);
             textFieldNom.setColumns(10);
 
-            JButton btnAddPatient2 = new JButton("Ajouter le patient");
-            btnAddPatient2.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-            btnAddPatient2.setBounds(170, 275, 126, 43);
-            contentPaneAddPatient.add(btnAddPatient2);
-
             labelDateDeNaissance = new JLabel("Date de naissance");
             labelDateDeNaissance.setBounds(120, 100, 250, 14);
             contentPaneAddPatient.add(labelDateDeNaissance);
@@ -67,6 +58,7 @@ public class AddPatientFrame extends JFrame {
             contentPaneAddPatient.add(textFieldNbSecuriteSociale);
             textFieldNbSecuriteSociale.setColumns(10);
 
+            Patient.initList();
             list.setModel(model);
             for (Patient patient: Patient.listePatient) {
                 model.addElement(patient);
@@ -74,10 +66,33 @@ public class AddPatientFrame extends JFrame {
 
             list.setBounds(550, 35, 350, 320);
             contentPaneAddPatient.add(list);
+
+            JButton btnAddPatient2 = new JButton("Ajouter le patient");
+            btnAddPatient2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e1) {
+                    String nom = textFieldNom.getText();
+                    String dateNaissance = formattedTextFieldDate.getText();
+                    String nbSecuriteSociale = textFieldNbSecuriteSociale.getText();
+                    textFieldNom.setText("");
+                    formattedTextFieldDate.setText("");
+                    textFieldNbSecuriteSociale.setText("");
+                    new Patient(nom, dateNaissance, nbSecuriteSociale);
+                    model.removeAllElements();
+                    for (Patient patient: Patient.listePatient) {
+                        model.addElement(patient);
+                    }
+
+                }
+            });
+            btnAddPatient2.setBounds(170, 275, 126, 43);
+            contentPaneAddPatient.add(btnAddPatient2);
             
             JButton btnRetourMenu = new JButton("Retourner au Menu");
             btnRetourMenu.addActionListener(new ActionListener() {
             	public void actionPerformed(ActionEvent e) {
+            		contentPaneAddPatient.setVisible(false);
+                    //contentPaneMenu.setVisible(true);
+                    //setContentPane(contentPaneMenu);
             	}
             });
             btnRetourMenu.setBounds(50, 393, 220, 30);

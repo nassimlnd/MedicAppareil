@@ -143,7 +143,7 @@ public class Patient {
 
     @Override
     public String toString() {
-        return nom + dateNaissance;
+        return nom + " " + dateNaissance;
     }
 
     public static void getPatient(String nbSecuriteSociale) throws PatientNotFoundException {
@@ -185,7 +185,7 @@ public class Patient {
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                if (line.toLowerCase().contains(this.getNom().toLowerCase()) || line.toLowerCase().contains(this.getDateNaissance())) {
+                if (line.toLowerCase().contains(this.getDateNaissance())) {
                     contains = true;
                 }
             }
@@ -257,10 +257,10 @@ public class Patient {
         }
     }
 
-    public static void ajouterPatient(String nom, String dateNaissance, String nbSecuriteSociale) {
+    /*public static void ajouterPatient(String nom, String dateNaissance, String nbSecuriteSociale) {
         new Patient(nom, dateNaissance, nbSecuriteSociale);
 
-    }
+    }*/
 
 
 }
