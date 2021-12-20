@@ -13,14 +13,14 @@ public class LoginPanel extends JPanel {
 	JRadioButton radioButtonTechnicien;
 	JRadioButton radioButtonMedecin;
 	JLabel labelErreur;
+	ButtonGroup buttonGroup;
 
 	/**
 	 * Create the panel.
 	 */
 	public LoginPanel() {
 		setLayout(null);
-
-		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup = new ButtonGroup();
 		
 		btnConnexion = new JButton("");
 		btnConnexion.setSelectedIcon(new ImageIcon(LoginPanel.class.getResource("/img/connexionButtonSelected.png")));
