@@ -10,24 +10,25 @@ public class Consultation {
 
     // Attributs
 
-    private int id = 0;
+    private int id;
     private String date;
-    private String description;
+    private String pathologies;
     private Patient patient;
     private String nomMedecin;
-    int cb = 0;
+    private boolean octroi;
 
     ArrayList<Consultation> listeConsultation = new ArrayList<Consultation>();
 
     // Constructeurs
 
-    public Consultation(String date, String description, Patient patient, String nomMedecin) {
+    public Consultation(String date, String pathologies, Patient patient, String nomMedecin, boolean octroi) {
         try {
             this.setId();
             this.date = date;
-            this.description = description;
+            this.pathologies = pathologies;
             this.patient = patient;
             this.nomMedecin = nomMedecin;
+            this.octroi = octroi;
             ajouterConsultation(this.patient);
         }
         catch (IOException ioException) {
@@ -74,12 +75,12 @@ public class Consultation {
         this.date = date;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPathologies() {
+        return pathologies;
     }
 
-    public void setDescription(String antecedents) {
-        this.description = antecedents;
+    public void setPathologies(String pathologies) {
+        this.pathologies = pathologies;
     }
 
     public String getNomMedecin() {
@@ -88,6 +89,14 @@ public class Consultation {
 
     public void setNomMedecin(String nomMedecin) {
         this.nomMedecin = nomMedecin;
+    }
+
+    public boolean isOctroi() {
+        return octroi;
+    }
+
+    public void setOctroi(boolean octroi) {
+        this.octroi = octroi;
     }
 
     // Methodes
@@ -102,30 +111,16 @@ public class Consultation {
             }
 
             FileReader fileReader = new FileReader(file.getAbsoluteFile());
-            Scanner sc = new Scanner(fileReader);
-
-            boolean contains = false;
-
-            /*while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                if (line.toLowerCase().contains(String.valueOf(this.getId())) || line.toLowerCase().contains(this.getDateNaissance())) {
-                    contains = true;
-                }
-            }*/
 
             fileReader.close();
 
-            if (contains == false) {
-                FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(this.getId() + ";" + this.getDate() + ";" + this.getNomMedecin() + ";" + this.patient.getNom() + ";" + this.getDescription() + "\n");
-                bufferedWriter.close();
-                fileWriter.close();
-                listeConsultation.add(this);
-                patient.ajouterConsultation(this);
-            } else {
-                System.out.println("org.Consultation déjà existante.");
-            }
+            FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(this.getId() + ";" + this.getDate() + ";" + this.getNomMedecin() + ";" + this.patient.getNom() + ";" + this.getPathologies() + "\n");
+            bufferedWriter.close();
+            fileWriter.close();
+            listeConsultation.add(this);
+            patient.ajouterConsultation(this);
 
         }
         catch (IOException ioException) {

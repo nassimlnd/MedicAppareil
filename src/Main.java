@@ -1,5 +1,5 @@
 import Exceptions.PatientNotFoundException;
-import GUI.MenuFrame;
+import GUI.Frame;
 
 public class Main {
 
@@ -15,9 +15,7 @@ public class Main {
 
         //Consultation consultation = new Consultation("test", "test", patient, "test");
 
-        MenuFrame menuFrame = new MenuFrame();
-
-        menuFrame.setVisible(true);
+        Frame frame = new Frame();
 
 
     }
