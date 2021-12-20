@@ -1,13 +1,18 @@
 package GUI;
 
 import javax.swing.*;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 
 public class LoginPanel extends JPanel {
 	
-	private JTextField textFieldIdentifiant;
-	private JPasswordField textFieldMotDePasse;
+	JTextField textFieldIdentifiant;
+	JPasswordField textFieldMotDePasse;
+	boolean connected = false;
+	JButton btnConnexion;
+	JRadioButton radioButtonAdmin;
+	JRadioButton radioButtonTechnicien;
+	JRadioButton radioButtonMedecin;
+	JLabel labelErreur;
 
 	/**
 	 * Create the panel.
@@ -17,11 +22,18 @@ public class LoginPanel extends JPanel {
 
 		ButtonGroup buttonGroup = new ButtonGroup();
 		
-		JButton btnConnexion = new JButton("");
+		btnConnexion = new JButton("");
 		btnConnexion.setSelectedIcon(new ImageIcon(LoginPanel.class.getResource("/img/connexionButtonSelected.png")));
 		btnConnexion.setIcon(new ImageIcon(LoginPanel.class.getResource("/img/connexionButton.png")));
 		btnConnexion.setBounds(703, 328, 140, 44);
 		ImageIcon imageIcon = new ImageIcon("/img/connexionButtonSelected.png");
+		
+		labelErreur = new JLabel("Identifiant ou mot de passe incorrect.");
+		labelErreur.setHorizontalAlignment(SwingConstants.CENTER);
+		labelErreur.setForeground(Color.WHITE);
+		labelErreur.setFont(new Font("Montserrat", Font.PLAIN, 13));
+		labelErreur.setBounds(638, 303, 270, 14);
+		add(labelErreur);
 		btnConnexion.setPressedIcon(new ImageIcon(LoginPanel.class.getResource("/img/connexionButtonSelected.png")));
 		add(btnConnexion);
 		
@@ -39,24 +51,24 @@ public class LoginPanel extends JPanel {
 		textFieldIdentifiant.setColumns(10);
 		textFieldIdentifiant.setBorder(BorderFactory.createLineBorder(Color.white));
 		
-		JRadioButton radioButtonAdmin = new JRadioButton("");
-		radioButtonAdmin.setBackground(new Color(153, 0, 255));
-		radioButtonAdmin.setBounds(87, 284, 21, 23);
-		add(radioButtonAdmin);
+		radioButtonTechnicien = new JRadioButton("");
+		radioButtonTechnicien.setBackground(new Color(153, 0, 255));
+		radioButtonTechnicien.setBounds(87, 284, 21, 23);
+		add(radioButtonTechnicien);
 		
-		JRadioButton radioButtonMedecin = new JRadioButton("");
+		radioButtonMedecin = new JRadioButton("");
 		radioButtonMedecin.setBackground(new Color(153, 0, 255));
 		radioButtonMedecin.setBounds(87, 249, 21, 23);
 		add(radioButtonMedecin);
 		
-		JRadioButton radioButtonTechnicien = new JRadioButton("");
-		radioButtonTechnicien.setBackground(new Color(153, 0, 255));
-		radioButtonTechnicien.setBounds(87, 213, 21, 23);
-		add(radioButtonTechnicien);
+		radioButtonAdmin = new JRadioButton("");
+		radioButtonAdmin.setBackground(new Color(153, 0, 255));
+		radioButtonAdmin.setBounds(87, 213, 21, 23);
+		add(radioButtonAdmin);
 
-		buttonGroup.add(radioButtonAdmin);
-		buttonGroup.add(radioButtonMedecin);
 		buttonGroup.add(radioButtonTechnicien);
+		buttonGroup.add(radioButtonMedecin);
+		buttonGroup.add(radioButtonAdmin);
 		
 		JLabel background = new JLabel("");
 		background.setIcon(new ImageIcon(LoginPanel.class.getResource("/img/background.png")));

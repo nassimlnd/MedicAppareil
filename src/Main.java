@@ -1,6 +1,8 @@
 import Exceptions.PatientNotFoundException;
 import GUI.Frame;
 
+import javax.swing.*;
+
 public class Main {
 
     public static void main(String[] args) throws PatientNotFoundException {
@@ -15,7 +17,17 @@ public class Main {
 
         //Consultation consultation = new Consultation("test", "test", patient, "test");
 
-        Frame frame = new Frame();
+        try {
+            Frame frame = new Frame();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
 
     }
