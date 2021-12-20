@@ -187,7 +187,7 @@ public class Patient {
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                if (line.toLowerCase().contains(this.getDateNaissance())) {
+                if (line.toLowerCase().contains(this.getNbSecuriteSociale())) {
                     contains = true;
                 }
             }
@@ -255,7 +255,7 @@ public class Patient {
                 listePatient.add(new Patient(split[0], split[1], split[2], split[3]));
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Patient introuvable");;
+            System.out.println("Fichier inexistant");
         }
     }
 
