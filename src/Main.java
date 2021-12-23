@@ -8,8 +8,6 @@ public class Main {
 
     public static void main(String[] args) throws PatientNotFoundException {
 
-        //Patient patient1 = new Patient("Nassim", "02/08/2002", "1234567891234");
-
         try {
             Frame frame = new Frame();
         } catch (UnsupportedLookAndFeelException e) {
@@ -21,8 +19,9 @@ public class Main {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (ParseException e) {
-            e.printStackTrace();
-        }
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
     }

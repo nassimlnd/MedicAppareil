@@ -45,13 +45,13 @@ public class Patient {
 
     public Patient(int id, String nom, String prenom, String dateNaissance, String nbSecuriteSociale) {
         try {
-            this.setId();
+            this.id = id;
             this.nom = nom;
+            this.prenom = prenom;
             this.dateNaissance = dateNaissance;
             this.nbSecuriteSociale = nbSecuriteSociale;
             this.listeConsultationPatient = new ArrayList<Consultation>();
-            this.ajouterPatient();
-        } catch (NumberFormatException | IOException e) {
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
 
@@ -75,11 +75,19 @@ public class Patient {
                 while (sc.hasNextLine()) {
                     String line = sc.nextLine();
                     String[] split = line.split(";");
-                    try {
-                        this.id = Integer.parseInt(split[0]) + 1;
-                    } catch (NumberFormatException e) {
+                    if (Integer.parseInt(split[0]) <= 0) {
                         this.id = 1;
                     }
+                    else {
+                        try {
+                            this.id = Integer.parseInt(split[0]) + 1;
+                        } catch (NumberFormatException e) {
+                            this.id = 1;
+                        }
+                    }
+                }
+                if (!sc.hasNextLine()) {
+                    this.id = 1;
                 }
             } else {
                 file.createNewFile();
@@ -91,6 +99,10 @@ public class Patient {
         }
 
 
+    }
+
+    public void setIdFichier(int id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -218,6 +230,8 @@ public class Patient {
         catch (IOException ioException) {
             ioException.printStackTrace();
         }
+
+        initFichier();
     }
 
     public void modif() {
@@ -234,22 +248,25 @@ public class Patient {
 
             fileReader = new FileReader(file.getAbsoluteFile());
             sc = new Scanner(fileReader);
-            fileWriter = new FileWriter("patient.txt");
 
-            newLine = this.getId() + ";" + this.getNom() + ";" + this.getPrenom() + ";" + this.getDateNaissance() + ";" + this.getNbSecuriteSociale() + "\n";
+            newLine = this.getId() + ";" + this.getNom() + ";" + this.getPrenom() + ";" + this.getDateNaissance() + ";" + this.getNbSecuriteSociale();
 
             while (sc.hasNextLine()) {
 
-                oldContent += sc.nextLine() + "\n";
+                String line = sc.nextLine();
 
-                if (String.valueOf(sc.nextLine().charAt(0)).equals(this.id)) {
-                    oldLine = sc.nextLine();
+                oldContent += line + "\n";
+
+                if (Integer.parseInt(String.valueOf(line.charAt(0))) == this.id) {
+                    oldLine = line;
                 }
             }
 
             newContent = oldContent.replaceAll(oldLine, newLine);
 
-            fileWriter.write(newContent);
+            fileWriter = new FileWriter("patient.txt");
+            fileWriter.append(newContent);
+            fileWriter.flush();
 
             fileReader.close();
             sc.close();
@@ -257,6 +274,36 @@ public class Patient {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public void initFichier() {
+        try {
+            File file = new File("patient.txt");
+
+            if (file.exists()) {
+                FileWriter fileWriter = new FileWriter("patient.txt");
+                fileWriter.close();
+            }
+            else {
+                file.createNewFile();
+            }
+
+            for (int i = 0; i < Patient.listePatient.size(); i ++) {
+                Patient.listePatient.get(i).setIdFichier(i+1);
+            }
+
+            for(Patient patient : listePatient) {
+                FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write(patient.getId() + ";" + patient.getNom() + ";" + patient.getPrenom() + ";" + patient.getDateNaissance() + ";" + patient.getNbSecuriteSociale() + "\n");
+                bufferedWriter.close();
+                fileWriter.close();
+            }
+
+        }
+        catch (IOException ioException) {
             ioException.printStackTrace();
         }
     }
@@ -295,12 +342,17 @@ public class Patient {
 
 
                 if (contains == false) {
-                    listePatient.add(new Patient(split[1], split[2], split[3], split[4]));
+                    listePatient.add(new Patient(Integer.parseInt(split[0]), split[1], split[2], split[3], split[4]));
                 }
             }
         } catch (FileNotFoundException e) {
             System.out.println("Fichier inexistant");;
         }
+    }
+
+    public void supprimerPatient() {
+        listePatient.remove(this);
+        initFichier();
     }
 
 

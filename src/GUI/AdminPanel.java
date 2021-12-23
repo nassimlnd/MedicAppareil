@@ -90,6 +90,8 @@ public class AdminPanel extends JPanel {
 		textFieldDateDeNaissance.setBorder(new LineBorder(Color.WHITE));
 		textFieldDateDeNaissance.setBounds(313, 125, 270, 25);
 		add(textFieldDateDeNaissance);
+
+		textFieldDateDeNaissance.setText("");
 		
 		textFieldPrenom = new JTextField();
 		textFieldPrenom.setForeground(Color.BLACK);
@@ -154,7 +156,7 @@ public class AdminPanel extends JPanel {
 				textFieldPrenom.setText("");
 				textFieldNumeroSS.setText("");
 
-				ajouter(defaultTableModel, table);
+				initTab(defaultTableModel, table);
 			}
 		});
 		
@@ -168,6 +170,20 @@ public class AdminPanel extends JPanel {
 		add(btnDeconnexion);
 		
 		JLabel background = new JLabel("");
+		background.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int selectedRow = table.getSelectedRow();
+				if (table.getSelectedRow() != -1) {
+					table.clearSelection();
+
+					textFieldNom.setText("");
+					textFieldDateDeNaissance.setText("");
+					textFieldPrenom.setText("");
+					textFieldNumeroSS.setText("");
+				}
+			}
+		});
 		background.setIcon(new ImageIcon(AdminPanel.class.getResource("/img/bgAdminPanel.png")));
 		background.setBounds(0, 0, 1000, 500);
 		add(background);
@@ -190,6 +206,50 @@ public class AdminPanel extends JPanel {
 				Patient.listePatient.get(ligneSelectionne).modif();
 
 				Patient.initList();
+				initTab(defaultTableModel, table);
+
+				textFieldNom.setText("");
+				textFieldDateDeNaissance.setText("");
+				textFieldPrenom.setText("");
+				textFieldNumeroSS.setText("");
+			}
+		});
+
+		buttonSupprimer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int ligneSelectionne = table.getSelectedRow();
+
+				Patient patientSuppr = Patient.listePatient.get(ligneSelectionne);
+
+				PopupSupprimer popupSupprimer = new PopupSupprimer();
+
+				popupSupprimer.labelPatient.setText(patientSuppr.getNom() + " " + patientSuppr.getPrenom());
+
+				popupSupprimer.buttonOui.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						patientSuppr.supprimerPatient();
+
+						initTab(defaultTableModel, table);
+
+						textFieldNom.setText("");
+						textFieldDateDeNaissance.setText("");
+						textFieldPrenom.setText("");
+						textFieldNumeroSS.setText("");
+
+						popupSupprimer.dispose();
+					}
+				});
+
+				/*patientSuppr.supprimerPatient();
+
+				initTab(defaultTableModel, table);
+
+				textFieldNom.setText("");
+				textFieldDateDeNaissance.setText("");
+				textFieldPrenom.setText("");
+				textFieldNumeroSS.setText("");*/
 			}
 		});
 		
@@ -197,7 +257,7 @@ public class AdminPanel extends JPanel {
 
 	}
 
-	public void ajouter(DefaultTableModel defaultTableModel, JTable table) {
+	public void initTab(DefaultTableModel defaultTableModel, JTable table) {
 		defaultTableModel.setRowCount(0);
 		table.revalidate();
 
