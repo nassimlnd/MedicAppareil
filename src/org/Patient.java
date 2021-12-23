@@ -12,6 +12,7 @@ public class Patient {
 
     private int id;
     private String nom;
+    private String prenom;
     private String dateNaissance;
     private String nbSecuriteSociale;
     private ArrayList<Consultation> listeConsultationPatient;
@@ -22,11 +23,12 @@ public class Patient {
 
     // Constructeur
 
-    public Patient(String nom, String dateNaissance, String nbSecuriteSociale) {
+    public Patient(String nom, String prenom, String dateNaissance, String nbSecuriteSociale) {
 
         try {
             this.setId();
             this.nom = nom;
+            this.prenom = prenom;
 
             this.setDateNaissance(dateNaissance);
             this.setNbSecuriteSociale(nbSecuriteSociale);
@@ -41,7 +43,7 @@ public class Patient {
 
     }
 
-    public Patient(String id, String nom, String dateNaissance, String nbSecuriteSociale) {
+    public Patient(int id, String nom, String prenom, String dateNaissance, String nbSecuriteSociale) {
         try {
             this.setId();
             this.nom = nom;
@@ -140,6 +142,14 @@ public class Patient {
         Patient.listePatient = listePatient;
     }
 
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
     // Methodes
 
 
@@ -148,9 +158,10 @@ public class Patient {
         return nom + " " + dateNaissance;
     }
 
-    public static void getPatient(String nbSecuriteSociale) throws PatientNotFoundException {
+    public static Patient getPatient(String nbSecuriteSociale) throws PatientNotFoundException {
         FileReader fileReader;
         Scanner sc;
+        Patient patient = null;
         try {
             fileReader = new FileReader("patient.txt");
             sc = new Scanner(fileReader);
@@ -159,16 +170,16 @@ public class Patient {
                 String line = sc.nextLine();
                 String[] split = line.split(";");
                 if (split[3].equals(nbSecuriteSociale)) {
-                    System.out.println(split[1]);
+                    patient = Patient.listePatient.get(Integer.parseInt(split[0]));
                 }
                 else throw new PatientNotFoundException();
             }
             sc.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Patient introuvable");;
+            System.out.println("Patient introuvable");
+            return null;
         }
-
-
+        return patient;
     }
 
     void ajouterPatient() {
@@ -187,7 +198,7 @@ public class Patient {
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                if (line.toLowerCase().contains(this.getNbSecuriteSociale())) {
+                if (line.toLowerCase().contains(this.getDateNaissance())) {
                     contains = true;
                 }
             }
@@ -197,7 +208,7 @@ public class Patient {
             if (contains == false) {
                 FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(this.getId() + ";" + this.getNom() + ";" + this.getDateNaissance() + ";" + this.getNbSecuriteSociale() + "\n");
+                bufferedWriter.write(this.getId() + ";" + this.getNom() + ";" + this.getPrenom() + ";" + this.getDateNaissance() + ";" + this.getNbSecuriteSociale() + "\n");
                 bufferedWriter.close();
                 fileWriter.close();
                 listePatient.add(this);
@@ -205,6 +216,47 @@ public class Patient {
 
         }
         catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public void modif() {
+        FileReader fileReader;
+        Scanner sc;
+        FileWriter fileWriter;
+        String oldLine = "";
+        String newLine;
+        String oldContent = "";
+        String newContent = "";
+
+        try {
+            File file = new File("patient.txt");
+
+            fileReader = new FileReader(file.getAbsoluteFile());
+            sc = new Scanner(fileReader);
+            fileWriter = new FileWriter("patient.txt");
+
+            newLine = this.getId() + ";" + this.getNom() + ";" + this.getPrenom() + ";" + this.getDateNaissance() + ";" + this.getNbSecuriteSociale() + "\n";
+
+            while (sc.hasNextLine()) {
+
+                oldContent += sc.nextLine() + "\n";
+
+                if (String.valueOf(sc.nextLine().charAt(0)).equals(this.id)) {
+                    oldLine = sc.nextLine();
+                }
+            }
+
+            newContent = oldContent.replaceAll(oldLine, newLine);
+
+            fileWriter.write(newContent);
+
+            fileReader.close();
+            sc.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException ioException) {
             ioException.printStackTrace();
         }
     }
@@ -218,51 +270,38 @@ public class Patient {
     }
 
     void modifierPatient() {
-        System.out.println("Que souhaitez vous modifier ? n pour le nom, d pour la date de naissance, et s pour le numéro de sécurité social.");
-        Scanner sc = new Scanner(System.in);
-        char choix = sc.nextLine().charAt(0);
-
-        switch (choix) {
-            case 'n' :
-                System.out.println("Veuillez saisir le nouveau nom du patient :");
-                String n = sc.nextLine();
-                this.setNom(n);
-                break;
-            case 'd' :
-                System.out.println("Date de naissance ?");
-                String date = sc.nextLine();
-                this.setDateNaissance(date);
-                break;
-            case 's' :
-                System.out.println("Numéro de sécurité sociale :");
-                String nbSecu = sc.nextLine();
-                this.setNbSecuriteSociale(nbSecu);
-                break;
-        }
 
     }
 
     public static void initList() {
         FileReader fileReader;
         Scanner sc;
+        boolean contains = false;
         try {
             fileReader = new FileReader("patient.txt");
             sc = new Scanner(fileReader);
 
+            Patient.listePatient.clear();
+
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 String[] split = line.split(";");
-                listePatient.add(new Patient(split[0], split[1], split[2], split[3]));
+
+                for (int i = 0; i < Patient.listePatient.size(); i ++) {
+                    if (split[4].equals(Patient.listePatient.get(i).getNbSecuriteSociale())) {
+                        contains = true;
+                    }
+                }
+
+
+                if (contains == false) {
+                    listePatient.add(new Patient(split[1], split[2], split[3], split[4]));
+                }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Fichier inexistant");
+            System.out.println("Fichier inexistant");;
         }
     }
-
-    /*public static void ajouterPatient(String nom, String dateNaissance, String nbSecuriteSociale) {
-        new Patient(nom, dateNaissance, nbSecuriteSociale);
-
-    }*/
 
 
 }

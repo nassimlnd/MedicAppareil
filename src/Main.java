@@ -2,6 +2,7 @@ import Exceptions.PatientNotFoundException;
 import GUI.Frame;
 
 import javax.swing.*;
+import java.text.ParseException;
 
 public class Main {
 
@@ -18,6 +19,8 @@ public class Main {
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 

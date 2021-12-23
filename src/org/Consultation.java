@@ -15,29 +15,25 @@ public class Consultation {
     private String pathologies;
     private Patient patient;
     private String nomMedecin;
-    private String appareil;
     private boolean octroi;
 
     ArrayList<Consultation> listeConsultation = new ArrayList<Consultation>();
 
     // Constructeurs
 
-    public Consultation(String date, String pathologies, Patient patient, String nomMedecin) {
+    public Consultation(String date, String pathologies, Patient patient, String nomMedecin, boolean octroi) {
         try {
             this.setId();
             this.date = date;
             this.pathologies = pathologies;
             this.patient = patient;
             this.nomMedecin = nomMedecin;
+            this.octroi = octroi;
             ajouterConsultation(this.patient);
         }
         catch (IOException ioException) {
 
         }
-    }
-    
-    public Consultation(String date, String pathologies, Patient patient, String nomMedecin, String appareil) {
-    	this.octroi = false;
     }
 
     // Getters and setters

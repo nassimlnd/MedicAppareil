@@ -7,12 +7,15 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 public class Frame extends JFrame {
 
 	private JPanel contentPane;
 	private LoginPanel loginPanel;
     private AdminPanel adminPanel;
+	private MedecinPanel medecinPanel;
+	private TechnicienPanel technicienPanel;
 
 	/**
 	 * Launch the application.
@@ -32,8 +35,9 @@ public class Frame extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws ParseException 
 	 */
-	public Frame() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public Frame() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParseException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Frame.class.getResource("/img/connexionButton.png")));
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -42,6 +46,8 @@ public class Frame extends JFrame {
 		setResizable(false);
 		loginPanel = new LoginPanel();
 		adminPanel = new AdminPanel();
+		medecinPanel = new MedecinPanel();
+		technicienPanel = new TechnicienPanel();
 		setContentPane(loginPanel);
 		contentPane = loginPanel;
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,7 +74,7 @@ public class Frame extends JFrame {
 				String identifiant = loginPanel.textFieldIdentifiant.getText();
 				String motdepasse = String.valueOf(loginPanel.textFieldMotDePasse.getPassword());
 
-				if (Connexion.connect(type, identifiant, motdepasse)) {
+				if (Connexion.connect(type, identifiant, motdepasse) && type.equals("admin")) {
 					System.out.println("Connexion réussie");
 					loginPanel.connected = true;
 					loginPanel.labelErreur.setForeground(Color.WHITE);
@@ -77,6 +83,26 @@ public class Frame extends JFrame {
 					loginPanel.buttonGroup.clearSelection();
 					loginPanel.setVisible(false);
 					setContentPane(adminPanel);
+				}
+				else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("medecin")) {
+					System.out.println("Connexion réussie");
+					loginPanel.connected = true;
+					loginPanel.labelErreur.setForeground(Color.WHITE);
+					loginPanel.textFieldIdentifiant.setText("");
+					loginPanel.textFieldMotDePasse.setText("");
+					loginPanel.buttonGroup.clearSelection();
+					loginPanel.setVisible(false);
+					setContentPane(medecinPanel);
+				}
+				else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("technicien")) {
+					System.out.println("Connexion réussie");
+					loginPanel.connected = true;
+					loginPanel.labelErreur.setForeground(Color.WHITE);
+					loginPanel.textFieldIdentifiant.setText("");
+					loginPanel.textFieldMotDePasse.setText("");
+					loginPanel.buttonGroup.clearSelection();
+					loginPanel.setVisible(false);
+					setContentPane(technicienPanel);
 				}
 				else {
 					loginPanel.labelErreur.setForeground(Color.RED);
