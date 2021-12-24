@@ -1,6 +1,8 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class LoginPanel extends JPanel {
@@ -74,6 +76,50 @@ public class LoginPanel extends JPanel {
 		background.setIcon(new ImageIcon(LoginPanel.class.getResource("/img/background.png")));
 		background.setBounds(0, 0, 1000, 500);
 		add(background);
+
+		textFieldIdentifiant.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				changed();
+			}
+			public void removeUpdate(DocumentEvent e) {
+				changed();
+			}
+			public void insertUpdate(DocumentEvent e) {
+				changed();
+			}
+
+			public void changed() {
+				if (textFieldIdentifiant.getText().equals("")){
+					btnConnexion.setEnabled(false);
+				}
+				else {
+					btnConnexion.setEnabled(true);
+				}
+
+			}
+		});
+
+		textFieldMotDePasse.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				changed();
+			}
+			public void removeUpdate(DocumentEvent e) {
+				changed();
+			}
+			public void insertUpdate(DocumentEvent e) {
+				changed();
+			}
+
+			public void changed() {
+				if (textFieldMotDePasse.getText().equals("")){
+					btnConnexion.setEnabled(false);
+				}
+				else {
+					btnConnexion.setEnabled(true);
+				}
+
+			}
+		});
 
 	}
 }

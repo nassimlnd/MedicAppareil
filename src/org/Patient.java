@@ -1,5 +1,6 @@
 package org;
 
+import Exceptions.PatientAlreadyPresentException;
 import Exceptions.PatientNotFoundException;
 
 import java.io.*;
@@ -19,13 +20,12 @@ public class Patient {
     
     // Martin le bg
 
-    public static ArrayList<Patient> listePatient = new ArrayList<Patient>();
+    public static ArrayList<Patient> listePatient = new ArrayList<>();
 
     // Constructeur
 
-    public Patient(String nom, String prenom, String dateNaissance, String nbSecuriteSociale) {
+    public Patient(String nom, String prenom, String dateNaissance, String nbSecuriteSociale) throws PatientAlreadyPresentException, NumberFormatException, IOException {
 
-        try {
             this.setId();
             this.nom = nom;
             this.prenom = prenom;
@@ -33,13 +33,9 @@ public class Patient {
             this.setDateNaissance(dateNaissance);
             this.setNbSecuriteSociale(nbSecuriteSociale);
 
-            this.listeConsultationPatient = new ArrayList<Consultation>();
+            this.listeConsultationPatient = new ArrayList<>();
 
             this.ajouterPatient();
-        }
-        catch (NumberFormatException | IOException numberFormatException) {
-            System.out.println(numberFormatException.getMessage());
-        }
 
     }
 
@@ -50,7 +46,7 @@ public class Patient {
             this.prenom = prenom;
             this.dateNaissance = dateNaissance;
             this.nbSecuriteSociale = nbSecuriteSociale;
-            this.listeConsultationPatient = new ArrayList<Consultation>();
+            this.listeConsultationPatient = new ArrayList<>();
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -95,7 +91,7 @@ public class Patient {
             }
         }
         catch (FileNotFoundException exception) {
-
+            exception.printStackTrace();
         }
 
 
@@ -127,7 +123,7 @@ public class Patient {
 
     public void setNbSecuriteSociale(String nbSecuriteSociale) {
         if (String.valueOf(nbSecuriteSociale).length() != 13) {
-            throw new NumberFormatException("NumÃ©ro de sÃ©curitÃ© sociale incorrect.");
+            throw new NumberFormatException("Numéro de sécurité sociale incorrect.");
         }
 
         this.nbSecuriteSociale = nbSecuriteSociale;
@@ -194,42 +190,33 @@ public class Patient {
         return patient;
     }
 
-    void ajouterPatient() {
-        try {
+    void ajouterPatient() throws IOException, PatientAlreadyPresentException {
+        File file = new File("patient.txt");
 
-            File file = new File("patient.txt");
-
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            FileReader fileReader = new FileReader(file.getAbsoluteFile());
-            Scanner sc = new Scanner(fileReader);
-
-            boolean contains = false;
-
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                if (line.toLowerCase().contains(this.getDateNaissance())) {
-                    contains = true;
-                }
-            }
-
-            fileReader.close();
-
-            if (contains == false) {
-                FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(this.getId() + ";" + this.getNom() + ";" + this.getPrenom() + ";" + this.getDateNaissance() + ";" + this.getNbSecuriteSociale() + "\n");
-                bufferedWriter.close();
-                fileWriter.close();
-                listePatient.add(this);
-            }
-
+        if (!file.exists()) {
+            file.createNewFile();
         }
-        catch (IOException ioException) {
-            ioException.printStackTrace();
+
+        FileReader fileReader = new FileReader(file.getAbsoluteFile());
+        Scanner sc = new Scanner(fileReader);
+
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            if (line.toLowerCase().contains(this.getNbSecuriteSociale())) {
+                throw new PatientAlreadyPresentException();
+            }
         }
+
+        fileReader.close();
+
+        FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(this.getId() + ";" + this.getNom() + ";" + this.getPrenom() + ";" + this.getDateNaissance() + ";" + this.getNbSecuriteSociale() + "\n");
+        bufferedWriter.close();
+        fileWriter.close();
+        listePatient.add(this);
+
 
         initFichier();
     }
@@ -241,7 +228,7 @@ public class Patient {
         String oldLine = "";
         String newLine;
         String oldContent = "";
-        String newContent = "";
+        String newContent;
 
         try {
             File file = new File("patient.txt");
@@ -271,10 +258,8 @@ public class Patient {
             fileReader.close();
             sc.close();
 
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
         }
     }
 
@@ -316,10 +301,6 @@ public class Patient {
         this.listeConsultationPatient.remove(consultation);
     }
 
-    void modifierPatient() {
-
-    }
-
     public static void initList() {
         FileReader fileReader;
         Scanner sc;
@@ -335,24 +316,45 @@ public class Patient {
                 String[] split = line.split(";");
 
                 for (int i = 0; i < Patient.listePatient.size(); i ++) {
-                    if (split[4].equals(Patient.listePatient.get(i).getNbSecuriteSociale())) {
-                        contains = true;
+                    if (!split[4].equals(Patient.listePatient.get(i).getNbSecuriteSociale())) {
+                        continue;
                     }
+                    contains = true;
                 }
 
 
-                if (contains == false) {
+                if (!contains) {
                     listePatient.add(new Patient(Integer.parseInt(split[0]), split[1], split[2], split[3], split[4]));
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Fichier inexistant");;
+            System.out.println("Fichier inexistant");
         }
     }
 
     public void supprimerPatient() {
         listePatient.remove(this);
         initFichier();
+    }
+
+    public static int recherche(String value) throws FileNotFoundException, PatientNotFoundException {
+        FileReader fileReader;
+        Scanner sc;
+        int id;
+
+        fileReader = new FileReader("patient.txt");
+        sc = new Scanner(fileReader);
+
+        while(sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] split = line.split(";");
+
+            if (line.contains(value)) {
+                id = Integer.parseInt(split[0]);
+                return id;
+            }
+        }
+        throw new PatientNotFoundException("Patient introuvable");
     }
 
 

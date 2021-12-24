@@ -1,5 +1,7 @@
 package GUI;
 
+import Exceptions.EmptyFieldException;
+import Exceptions.PatientAlreadyPresentException;
 import org.Patient;
 
 import javax.swing.*;
@@ -11,21 +13,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.text.ParseException;
 
 public class AdminPanel extends JPanel {
 
-	JButton btnDeconnexion;
-	JButton buttonRechercher;
-	JButton buttonSupprimer;
-	JButton buttonModifier;
-	JButton buttonAjouter;
-	JTextField textFieldNom;
-	JTextField textFieldPrenom;
-	JFormattedTextField textFieldDateDeNaissance;
-	JTextField textFieldNumeroSS;
-	DefaultTableModel defaultTableModel;
-	JTable table;
+	static JButton btnDeconnexion;
+	static JButton buttonRechercher;
+	static JButton buttonSupprimer;
+	static JButton buttonModifier;
+	static JButton buttonAjouter;
+	static JTextField textFieldNom;
+	static JTextField textFieldPrenom;
+	static JFormattedTextField textFieldDateDeNaissance;
+	static JTextField textFieldNumeroSS;
+	static DefaultTableModel defaultTableModel;
+	static JTable table;
+	static JLabel labelError;
 
 	/**
 	 * Create the panel.
@@ -56,11 +60,11 @@ public class AdminPanel extends JPanel {
 			}
 		});
 
-		for (int i = 0; i < Patient.listePatient.size(); i ++) {
-			String nom = Patient.listePatient.get(i).getNom();
-			String prenom = Patient.listePatient.get(i).getPrenom();
-			String datedenaissance = Patient.listePatient.get(i).getDateNaissance();
-			String numeross = Patient.listePatient.get(i).getNbSecuriteSociale();
+		for (int i = 0; i < Patient.getListePatient().size(); i ++) {
+			String nom = Patient.getListePatient().get(i).getNom();
+			String prenom = Patient.getListePatient().get(i).getPrenom();
+			String datedenaissance = Patient.getListePatient().get(i).getDateNaissance();
+			String numeross = Patient.getListePatient().get(i).getNbSecuriteSociale();
 
 			String[] data = {nom, prenom, datedenaissance, numeross};
 
@@ -68,8 +72,15 @@ public class AdminPanel extends JPanel {
 
 		}
 		
+		labelError = new JLabel();
+		labelError.setHorizontalAlignment(SwingConstants.CENTER);
+		labelError.setForeground(Color.WHITE);
+		labelError.setFont(new Font("Montserrat", Font.PLAIN, 11));
+		labelError.setBounds(459, 162, 332, 14);
+		add(labelError);
+		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(310, 190, 655, 263);
+		scrollPane.setBounds(298, 195, 655, 263);
 		add(scrollPane);
 		
 		textFieldNumeroSS = new JTextField();
@@ -144,19 +155,38 @@ public class AdminPanel extends JPanel {
 		buttonAjouter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String nom = textFieldNom.getText();
-				String prenom = textFieldPrenom.getText();
-				String datedenaissance = textFieldDateDeNaissance.getText();
-				String numeross = textFieldNumeroSS.getText();
+				try {
+					if (textFieldNom.getText().isEmpty() || textFieldPrenom.getText().isEmpty() || textFieldDateDeNaissance.getText().isEmpty() || textFieldNumeroSS.getText().isEmpty()) {
+						throw new EmptyFieldException();
+					}
 
-				new Patient(nom, prenom, datedenaissance, numeross);
+					String nom = textFieldNom.getText();
+					String prenom = textFieldPrenom.getText();
+					String datedenaissance = textFieldDateDeNaissance.getText();
+					String numeross = textFieldNumeroSS.getText();
 
-				textFieldNom.setText("");
-				textFieldDateDeNaissance.setText("");
-				textFieldPrenom.setText("");
-				textFieldNumeroSS.setText("");
+					new Patient(nom, prenom, datedenaissance, numeross);
 
-				initTab(defaultTableModel, table);
+					textFieldNom.setText("");
+					textFieldDateDeNaissance.setText("");
+					textFieldPrenom.setText("");
+					textFieldNumeroSS.setText("");
+
+					initTab(defaultTableModel, table);
+				}
+				catch (PatientAlreadyPresentException patientAlreadyPresentException) {
+					labelError.setText("Patient déjà présent. Veuillez vérifier les données du patient.");
+					labelError.setForeground(Color.red);
+				} catch (EmptyFieldException emptyFieldException) {
+					labelError.setText("Champs incorrects. Veuillez réessayer.");
+					labelError.setForeground(Color.red);
+				} catch (NumberFormatException numberFormatException) {
+					labelError.setText(numberFormatException.getMessage());
+					labelError.setForeground(Color.red);
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
+
 			}
 		});
 		
@@ -198,12 +228,11 @@ public class AdminPanel extends JPanel {
 
 				int ligneSelectionne = table.getSelectedRow();
 
-				Patient.listePatient.get(ligneSelectionne).setPrenom(prenom);
-				Patient.listePatient.get(ligneSelectionne).setNom(nom);
-				Patient.listePatient.get(ligneSelectionne).setDateNaissance(datedenaissance);
-				Patient.listePatient.get(ligneSelectionne).setNbSecuriteSociale(numeroSS);
-
-				Patient.listePatient.get(ligneSelectionne).modif();
+				Patient.getListePatient().get(ligneSelectionne).setPrenom(prenom);
+				Patient.getListePatient().get(ligneSelectionne).setNom(nom);
+				Patient.getListePatient().get(ligneSelectionne).setDateNaissance(datedenaissance);
+				Patient.getListePatient().get(ligneSelectionne).setNbSecuriteSociale(numeroSS);
+				Patient.getListePatient().get(ligneSelectionne).modif();
 
 				Patient.initList();
 				initTab(defaultTableModel, table);
@@ -220,12 +249,10 @@ public class AdminPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int ligneSelectionne = table.getSelectedRow();
 
-				Patient patientSuppr = Patient.listePatient.get(ligneSelectionne);
+				Patient patientSuppr = Patient.getListePatient().get(ligneSelectionne);
 
 				PopupSupprimer popupSupprimer = new PopupSupprimer();
-
 				popupSupprimer.labelPatient.setText(patientSuppr.getNom() + " " + patientSuppr.getPrenom());
-
 				popupSupprimer.buttonOui.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -241,15 +268,13 @@ public class AdminPanel extends JPanel {
 						popupSupprimer.dispose();
 					}
 				});
+			}
+		});
 
-				/*patientSuppr.supprimerPatient();
-
-				initTab(defaultTableModel, table);
-
-				textFieldNom.setText("");
-				textFieldDateDeNaissance.setText("");
-				textFieldPrenom.setText("");
-				textFieldNumeroSS.setText("");*/
+		buttonRechercher.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PopupRecherche popupRecherche = new PopupRecherche();
 			}
 		});
 		
@@ -261,11 +286,11 @@ public class AdminPanel extends JPanel {
 		defaultTableModel.setRowCount(0);
 		table.revalidate();
 
-		for (int i = 0; i < Patient.listePatient.size(); i ++) {
-			String nom1 = Patient.listePatient.get(i).getNom();
-			String prenom = Patient.listePatient.get(i).getPrenom();
-			String datedenaissance1 = Patient.listePatient.get(i).getDateNaissance();
-			String numeross1 = Patient.listePatient.get(i).getNbSecuriteSociale();
+		for (int i = 0; i < Patient.getListePatient().size(); i ++) {
+			String nom1 = Patient.getListePatient().get(i).getNom();
+			String prenom = Patient.getListePatient().get(i).getPrenom();
+			String datedenaissance1 = Patient.getListePatient().get(i).getDateNaissance();
+			String numeross1 = Patient.getListePatient().get(i).getNbSecuriteSociale();
 
 			String[] data = {nom1, prenom, datedenaissance1, numeross1};
 
