@@ -52,21 +52,21 @@ public class PopupRecherche extends JDialog {
 		textFieldRecherche.setColumns(10);
 		
 		JButton buttonAnnuler = new JButton("");
-		buttonAnnuler.setPressedIcon(new ImageIcon(PopupRecherche.class.getResource("/img/buttonAnnulerPressed.png")));
-		buttonAnnuler.setSelectedIcon(new ImageIcon(PopupRecherche.class.getResource("/img/buttonAnnulerPressed.png")));
-		buttonAnnuler.setIcon(new ImageIcon(PopupRecherche.class.getResource("/img/buttonAnnuler.png")));
+		buttonAnnuler.setPressedIcon(new ImageIcon(PopupRecherche.class.getResource("/buttonAnnulerPressed.png")));
+		buttonAnnuler.setSelectedIcon(new ImageIcon(PopupRecherche.class.getResource("/buttonAnnulerPressed.png")));
+		buttonAnnuler.setIcon(new ImageIcon(PopupRecherche.class.getResource("/buttonAnnuler.png")));
 		buttonAnnuler.setBounds(300, 160, 88, 33);
 		getContentPane().add(buttonAnnuler);
 		
 		JButton buttonValider = new JButton("");
-		buttonValider.setPressedIcon(new ImageIcon(PopupRecherche.class.getResource("/img/buttonValiderPressed.png")));
-		buttonValider.setSelectedIcon(new ImageIcon(PopupRecherche.class.getResource("/img/buttonValiderPressed.png")));
-		buttonValider.setIcon(new ImageIcon(PopupRecherche.class.getResource("/img/buttonValider.png")));
+		buttonValider.setPressedIcon(new ImageIcon(PopupRecherche.class.getResource("/buttonValiderPressed.png")));
+		buttonValider.setSelectedIcon(new ImageIcon(PopupRecherche.class.getResource("/buttonValiderPressed.png")));
+		buttonValider.setIcon(new ImageIcon(PopupRecherche.class.getResource("/buttonValider.png")));
 		buttonValider.setBounds(101, 160, 80, 33);
 		getContentPane().add(buttonValider);
 		
 		JLabel background = new JLabel("");
-		background.setIcon(new ImageIcon(PopupRecherche.class.getResource("/img/PopupRecherche.png")));
+		background.setIcon(new ImageIcon(PopupRecherche.class.getResource("/PopupRecherche.png")));
 		background.setBounds(0, 0, 500, 250);
 		getContentPane().add(background);
 

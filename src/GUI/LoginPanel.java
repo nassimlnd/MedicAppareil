@@ -25,10 +25,10 @@ public class LoginPanel extends JPanel {
 		buttonGroup = new ButtonGroup();
 		
 		btnConnexion = new JButton("");
-		btnConnexion.setSelectedIcon(new ImageIcon(LoginPanel.class.getResource("/img/connexionButtonSelected.png")));
-		btnConnexion.setIcon(new ImageIcon(LoginPanel.class.getResource("/img/connexionButton.png")));
+		btnConnexion.setSelectedIcon(new ImageIcon(LoginPanel.class.getResource("/connexionButtonSelected.png")));
+		btnConnexion.setIcon(new ImageIcon(LoginPanel.class.getResource("/connexionButton.png")));
 		btnConnexion.setBounds(703, 328, 140, 44);
-		ImageIcon imageIcon = new ImageIcon("/img/connexionButtonSelected.png");
+		ImageIcon imageIcon = new ImageIcon("/connexionButtonSelected.png");
 		
 		labelErreur = new JLabel("Identifiant ou mot de passe incorrect.");
 		labelErreur.setHorizontalAlignment(SwingConstants.CENTER);
@@ -36,7 +36,7 @@ public class LoginPanel extends JPanel {
 		labelErreur.setFont(new Font("Montserrat", Font.PLAIN, 13));
 		labelErreur.setBounds(638, 303, 270, 14);
 		add(labelErreur);
-		btnConnexion.setPressedIcon(new ImageIcon(LoginPanel.class.getResource("/img/connexionButtonSelected.png")));
+		btnConnexion.setPressedIcon(new ImageIcon(LoginPanel.class.getResource("/connexionButtonSelected.png")));
 		add(btnConnexion);
 		
 		textFieldMotDePasse = new JPasswordField();
@@ -73,7 +73,7 @@ public class LoginPanel extends JPanel {
 		buttonGroup.add(radioButtonAdmin);
 		
 		JLabel background = new JLabel("");
-		background.setIcon(new ImageIcon(LoginPanel.class.getResource("/img/background.png")));
+		background.setIcon(new ImageIcon(LoginPanel.class.getResource("/background.png")));
 		background.setBounds(0, 0, 1000, 500);
 		add(background);
 

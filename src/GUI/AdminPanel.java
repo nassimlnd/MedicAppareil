@@ -121,34 +121,34 @@ public class AdminPanel extends JPanel {
 		textFieldNom.setColumns(10);
 		
 		buttonRechercher = new JButton("");
-		buttonRechercher.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonRechercherPressed.png")));
-		buttonRechercher.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonRechercherPressed.png")));
+		buttonRechercher.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonRechercherPressed.png")));
+		buttonRechercher.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonRechercherPressed.png")));
 		buttonRechercher.setBackground(new Color(153, 0, 255));
-		buttonRechercher.setIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonRechercher.png")));
+		buttonRechercher.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonRechercher.png")));
 		buttonRechercher.setBounds(63, 293, 113, 33);
 		add(buttonRechercher);
 		
 		buttonSupprimer = new JButton("");
-		buttonSupprimer.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonSupprimerPressed.png")));
-		buttonSupprimer.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonSupprimerPressed.png")));
+		buttonSupprimer.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonSupprimerPressed.png")));
+		buttonSupprimer.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonSupprimerPressed.png")));
 		buttonSupprimer.setBackground(new Color(153, 0, 255));
-		buttonSupprimer.setIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonSupprimer.png")));
+		buttonSupprimer.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonSupprimer.png")));
 		buttonSupprimer.setBounds(71, 226, 97, 31);
 		add(buttonSupprimer);
 		
 		buttonModifier = new JButton("");
-		buttonModifier.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonModifierPressed.png")));
-		buttonModifier.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonModifierPressed.png")));
+		buttonModifier.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonModifierPressed.png")));
+		buttonModifier.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonModifierPressed.png")));
 		buttonModifier.setBackground(new Color(153, 0, 255));
-		buttonModifier.setIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonModifier.png")));
+		buttonModifier.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonModifier.png")));
 		buttonModifier.setBounds(78, 159, 82, 31);
 		add(buttonModifier);
 		
 		buttonAjouter = new JButton("");
-		buttonAjouter.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonAjouterPressed.png")));
-		buttonAjouter.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonAjouterPressed.png")));
+		buttonAjouter.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonAjouterPressed.png")));
+		buttonAjouter.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonAjouterPressed.png")));
 		buttonAjouter.setBackground(new Color(153, 0, 255));
-		buttonAjouter.setIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonAjouter.png")));
+		buttonAjouter.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonAjouter.png")));
 		buttonAjouter.setBounds(80, 93, 77, 31);
 		add(buttonAjouter);
 
@@ -193,10 +193,10 @@ public class AdminPanel extends JPanel {
 		btnDeconnexion = new JButton("");
 		btnDeconnexion.setBackground(new Color(153, 0, 255));
 		btnDeconnexion.setForeground(new Color(153, 0, 255));
-		btnDeconnexion.setIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonDeconnexion.png")));
+		btnDeconnexion.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonDeconnexion.png")));
 		btnDeconnexion.setBounds(56, 372, 125, 33);
-		btnDeconnexion.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonPressedDeconnexion.png")));
-		btnDeconnexion.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/img/buttonPressedDeconnexion.png")));
+		btnDeconnexion.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonPressedDeconnexion.png")));
+		btnDeconnexion.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonPressedDeconnexion.png")));
 		add(btnDeconnexion);
 		
 		JLabel background = new JLabel("");
@@ -214,7 +214,7 @@ public class AdminPanel extends JPanel {
 				}
 			}
 		});
-		background.setIcon(new ImageIcon(AdminPanel.class.getResource("/img/bgAdminPanel.png")));
+		background.setIcon(new ImageIcon(AdminPanel.class.getResource("/bgAdminPanel.png")));
 		background.setBounds(0, 0, 1000, 500);
 		add(background);
 		

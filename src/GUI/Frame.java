@@ -2,11 +2,13 @@ package GUI;
 
 import org.Connexion;
 
+import javax.security.auth.login.AccountNotFoundException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 
 public class Frame extends JFrame {
@@ -38,7 +40,7 @@ public class Frame extends JFrame {
 	 * @throws ParseException 
 	 */
 	public Frame() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParseException {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Frame.class.getResource("/img/connexionButton.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Frame.class.getResource("/connexionButton.png")));
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("MedicAppareil");
@@ -74,39 +76,45 @@ public class Frame extends JFrame {
 				String identifiant = loginPanel.textFieldIdentifiant.getText();
 				String motdepasse = String.valueOf(loginPanel.textFieldMotDePasse.getPassword());
 
-				if (Connexion.connect(type, identifiant, motdepasse) && type.equals("admin")) {
-					System.out.println("Connexion réussie");
-					loginPanel.connected = true;
-					loginPanel.labelErreur.setForeground(Color.WHITE);
-					loginPanel.textFieldIdentifiant.setText("");
-					loginPanel.textFieldMotDePasse.setText("");
-					loginPanel.buttonGroup.clearSelection();
-					loginPanel.setVisible(false);
-					setContentPane(adminPanel);
-				}
-				else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("medecin")) {
-					System.out.println("Connexion réussie");
-					loginPanel.connected = true;
-					loginPanel.labelErreur.setForeground(Color.WHITE);
-					loginPanel.textFieldIdentifiant.setText("");
-					loginPanel.textFieldMotDePasse.setText("");
-					loginPanel.buttonGroup.clearSelection();
-					loginPanel.setVisible(false);
-					setContentPane(medecinPanel);
-				}
-				else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("technicien")) {
-					System.out.println("Connexion réussie");
-					loginPanel.connected = true;
-					loginPanel.labelErreur.setForeground(Color.WHITE);
-					loginPanel.textFieldIdentifiant.setText("");
-					loginPanel.textFieldMotDePasse.setText("");
-					loginPanel.buttonGroup.clearSelection();
-					loginPanel.setVisible(false);
-					setContentPane(technicienPanel);
-				}
-				else {
-					loginPanel.labelErreur.setForeground(Color.RED);
-					System.out.println("Connexion échoué");
+				try {
+					if (Connexion.connect(type, identifiant, motdepasse) && type.equals("admin")) {
+						System.out.println("Connexion réussie");
+						loginPanel.connected = true;
+						loginPanel.labelErreur.setForeground(Color.WHITE);
+						loginPanel.textFieldIdentifiant.setText("");
+						loginPanel.textFieldMotDePasse.setText("");
+						loginPanel.buttonGroup.clearSelection();
+						loginPanel.setVisible(false);
+						setContentPane(adminPanel);
+					}
+					else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("medecin")) {
+						System.out.println("Connexion réussie");
+						loginPanel.connected = true;
+						loginPanel.labelErreur.setForeground(Color.WHITE);
+						loginPanel.textFieldIdentifiant.setText("");
+						loginPanel.textFieldMotDePasse.setText("");
+						loginPanel.buttonGroup.clearSelection();
+						loginPanel.setVisible(false);
+						setContentPane(medecinPanel);
+					}
+					else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("technicien")) {
+						System.out.println("Connexion réussie");
+						loginPanel.connected = true;
+						loginPanel.labelErreur.setForeground(Color.WHITE);
+						loginPanel.textFieldIdentifiant.setText("");
+						loginPanel.textFieldMotDePasse.setText("");
+						loginPanel.buttonGroup.clearSelection();
+						loginPanel.setVisible(false);
+						setContentPane(technicienPanel);
+					}
+					else {
+						loginPanel.labelErreur.setForeground(Color.RED);
+						System.out.println("Connexion échoué");
+					}
+				} catch (AccountNotFoundException ex) {
+					ex.printStackTrace();
+				} catch (FileNotFoundException ex) {
+					ex.printStackTrace();
 				}
 			}
 		});

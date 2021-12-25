@@ -35,16 +35,16 @@ public class PopupSupprimer extends JDialog {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		JButton buttonAnnuler = new JButton("");
-		buttonAnnuler.setPressedIcon(new ImageIcon(PopupSupprimer.class.getResource("/img/buttonAnnulerPressed.png")));
-		buttonAnnuler.setSelectedIcon(new ImageIcon(PopupSupprimer.class.getResource("/img/buttonAnnulerPressed.png")));
-		buttonAnnuler.setIcon(new ImageIcon(PopupSupprimer.class.getResource("/img/buttonAnnuler.png")));
+		buttonAnnuler.setPressedIcon(new ImageIcon(PopupSupprimer.class.getResource("/buttonAnnulerPressed.png")));
+		buttonAnnuler.setSelectedIcon(new ImageIcon(PopupSupprimer.class.getResource("/buttonAnnulerPressed.png")));
+		buttonAnnuler.setIcon(new ImageIcon(PopupSupprimer.class.getResource("/buttonAnnuler.png")));
 		buttonAnnuler.setBounds(228, 135, 88, 33);
 		getContentPane().add(buttonAnnuler);
 		
 		buttonOui = new JButton("");
-		buttonOui.setSelectedIcon(new ImageIcon(PopupSupprimer.class.getResource("/img/buttonOuiPressed.png")));
-		buttonOui.setPressedIcon(new ImageIcon(PopupSupprimer.class.getResource("/img/buttonOuiPressed.png")));
-		buttonOui.setIcon(new ImageIcon(PopupSupprimer.class.getResource("/img/buttonOui.png")));
+		buttonOui.setSelectedIcon(new ImageIcon(PopupSupprimer.class.getResource("/buttonOuiPressed.png")));
+		buttonOui.setPressedIcon(new ImageIcon(PopupSupprimer.class.getResource("/buttonOuiPressed.png")));
+		buttonOui.setIcon(new ImageIcon(PopupSupprimer.class.getResource("/buttonOui.png")));
 		buttonOui.setBounds(89, 135, 57, 33);
 		getContentPane().add(buttonOui);
 		
@@ -55,7 +55,7 @@ public class PopupSupprimer extends JDialog {
 		getContentPane().add(labelPatient);
 		
 		JLabel background = new JLabel("");
-		background.setIcon(new ImageIcon(PopupSupprimer.class.getResource("/img/popupSupprimerBackground.png")));
+		background.setIcon(new ImageIcon(PopupSupprimer.class.getResource("/popupSupprimerBackground.png")));
 		background.setBounds(0, 0, 400, 200);
 		getContentPane().add(background);
 
