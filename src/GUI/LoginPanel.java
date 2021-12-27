@@ -54,17 +54,20 @@ public class LoginPanel extends JPanel {
 		textFieldIdentifiant.setBorder(BorderFactory.createLineBorder(Color.white));
 		
 		radioButtonTechnicien = new JRadioButton("");
-		radioButtonTechnicien.setBackground(new Color(153, 0, 255));
+		radioButtonTechnicien.setBackground(null);
+		radioButtonTechnicien.setOpaque(false);
 		radioButtonTechnicien.setBounds(87, 284, 21, 23);
 		add(radioButtonTechnicien);
 		
 		radioButtonMedecin = new JRadioButton("");
-		radioButtonMedecin.setBackground(new Color(153, 0, 255));
+		radioButtonMedecin.setBackground(null);
+		radioButtonMedecin.setOpaque(false);
 		radioButtonMedecin.setBounds(87, 249, 21, 23);
 		add(radioButtonMedecin);
 		
 		radioButtonAdmin = new JRadioButton("");
-		radioButtonAdmin.setBackground(new Color(153, 0, 255));
+		radioButtonAdmin.setBackground(null);
+		radioButtonAdmin.setOpaque(false);
 		radioButtonAdmin.setBounds(87, 213, 21, 23);
 		add(radioButtonAdmin);
 

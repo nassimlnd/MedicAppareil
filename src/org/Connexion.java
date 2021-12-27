@@ -4,6 +4,9 @@ import javax.security.auth.login.AccountNotFoundException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 public class Connexion {
@@ -23,7 +26,7 @@ public class Connexion {
 
             if (split[1].equals(type)) {
                 if (split[2].equals(identifiant)) {
-                    if (split[3].equals(mdp)) {
+                    if (split[3].equals(md5Encrypt(mdp))) {
                         isCorrect = true;
                         return isCorrect;
                     }
@@ -36,6 +39,25 @@ public class Connexion {
 
         throw new AccountNotFoundException();
 
+    }
+
+    public static String md5Encrypt(String motdepasse) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            byte[] messageDigest = md.digest(motdepasse.getBytes());
+
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            String hashedPassword = no.toString(16);
+            while (hashedPassword.length() < 32) {
+                hashedPassword = "0" + hashedPassword;
+            }
+
+            return hashedPassword;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException();
+        }
     }
 
 }

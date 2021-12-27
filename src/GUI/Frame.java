@@ -1,6 +1,8 @@
 package GUI;
 
 import org.Connexion;
+import org.Consultation;
+import org.Patient;
 
 import javax.security.auth.login.AccountNotFoundException;
 import javax.swing.*;
@@ -45,7 +47,7 @@ public class Frame extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("MedicAppareil");
 		setBounds(100, 100, 1000, 500);
-		setResizable(false);
+		setResizable(true);
 		loginPanel = new LoginPanel();
 		adminPanel = new AdminPanel();
 		medecinPanel = new MedecinPanel();
@@ -85,6 +87,7 @@ public class Frame extends JFrame {
 						loginPanel.textFieldMotDePasse.setText("");
 						loginPanel.buttonGroup.clearSelection();
 						loginPanel.setVisible(false);
+						Patient.initList();
 						setContentPane(adminPanel);
 					}
 					else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("medecin")) {
@@ -95,6 +98,7 @@ public class Frame extends JFrame {
 						loginPanel.textFieldMotDePasse.setText("");
 						loginPanel.buttonGroup.clearSelection();
 						loginPanel.setVisible(false);
+						Consultation.initList();
 						setContentPane(medecinPanel);
 					}
 					else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("technicien")) {
@@ -122,6 +126,14 @@ public class Frame extends JFrame {
 		adminPanel.btnDeconnexion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent deconnexion) {
+				loginPanel.setVisible(true);
+				setContentPane(loginPanel);
+			}
+		});
+
+		medecinPanel.buttonDeconnexion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				loginPanel.setVisible(true);
 				setContentPane(loginPanel);
 			}

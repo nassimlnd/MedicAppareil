@@ -3,6 +3,8 @@ package org;
 import Exceptions.ConsultationNotFoundException;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,25 +17,40 @@ public class Consultation {
     private String pathologies;
     private Patient patient;
     private String nomMedecin;
+    private String appareil;
     private boolean octroi;
 
-    ArrayList<Consultation> listeConsultation = new ArrayList<Consultation>();
+    public static ArrayList<Consultation> listeConsultation = new ArrayList<Consultation>();
 
     // Constructeurs
 
-    public Consultation(String date, String pathologies, Patient patient, String nomMedecin, boolean octroi) {
-        try {
-            this.setId();
-            this.date = date;
-            this.pathologies = pathologies;
-            this.patient = patient;
-            this.nomMedecin = nomMedecin;
-            this.octroi = octroi;
-            ajouterConsultation(this.patient);
-        }
-        catch (IOException ioException) {
+    public Consultation(Patient patient, String pathologies, String nomMedecin) throws IOException {
+        this.setId();
+        this.setDate();
+        this.pathologies = pathologies;
+        this.patient = patient;
+        this.nomMedecin = nomMedecin;
+        ajouterConsultation(this.patient);
+    }
 
-        }
+    public Consultation(Patient patient, String pathologies, String appareil, String nomMedecin) throws IOException {
+        this.setId();
+        this.setDate();
+        this.pathologies = pathologies;
+        this.patient = patient;
+        this.nomMedecin = nomMedecin;
+        this.appareil = appareil;
+        this.octroi = false;
+    }
+
+    public Consultation(int id, Patient patient, String nomMedecin, String date, String pathologies, String appareil, boolean octroi) {
+        this.id = id;
+        this.patient = patient;
+        this.nomMedecin = nomMedecin;
+        this.date = date;
+        this.pathologies = pathologies;
+        this.appareil = appareil;
+        this.octroi = octroi;
     }
 
     // Getters and setters
@@ -67,12 +84,21 @@ public class Consultation {
 
     }
 
+    public void setIdFichier(int id) {
+        this.id = id;
+    }
+
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate() {
+
+        LocalDate localDate = LocalDate.now();
+
+        String formattedDate = localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        this.date = formattedDate;
     }
 
     public String getPathologies() {
@@ -99,6 +125,38 @@ public class Consultation {
         this.octroi = octroi;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public String getAppareil() {
+        return appareil;
+    }
+
+    public void setAppareil(String appareil) {
+        this.appareil = appareil;
+    }
+
+    public static ArrayList<Consultation> getListeConsultation() {
+        return listeConsultation;
+    }
+
+    public void setListeConsultation(ArrayList<Consultation> listeConsultation) {
+        this.listeConsultation = listeConsultation;
+    }
+
+    public boolean getOctroi() {
+        return this.octroi;
+    }
+
     // Methodes
 
     void ajouterConsultation(Patient patient) {
@@ -116,7 +174,7 @@ public class Consultation {
 
             FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(this.getId() + ";" + this.getDate() + ";" + this.getNomMedecin() + ";" + this.patient.getNom() + ";" + this.getPathologies() + "\n");
+            bufferedWriter.write(this.getId() + ";" + (this.getPatient().getId() - 1) + ";" + this.getNomMedecin() + ";" + this.getDate() + ";"  + this.getPathologies() + ";" + this.getAppareil() + ";" + this.getOctroi() + "\n");
             bufferedWriter.close();
             fileWriter.close();
             listeConsultation.add(this);
@@ -133,6 +191,56 @@ public class Consultation {
             patient.supprimerConsulation(this);
         }
         else throw new ConsultationNotFoundException();
+    }
+
+    public static void initList() {
+        FileReader fileReader;
+        Scanner sc;
+        boolean contains = false;
+        try {
+            fileReader = new FileReader("consultation.txt");
+            sc = new Scanner(fileReader);
+
+            listeConsultation.clear();
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String[] split = line.split(";");
+                listeConsultation.add(new Consultation(Integer.parseInt(split[0]), Patient.getListePatient().get(Integer.parseInt(split[1])), split[2], split[3], split[4], split[5], Boolean.valueOf(split[6]).booleanValue()));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Fichier inexistant");
+        }
+    }
+
+    public void initFichier() {
+        try {
+            File file = new File("consultation.txt");
+
+            if (file.exists()) {
+                FileWriter fileWriter = new FileWriter("consultation.txt");
+                fileWriter.close();
+            }
+            else {
+                file.createNewFile();
+            }
+
+            for (int i = 0; i < Consultation.getListeConsultation().size(); i ++) {
+                Consultation.getListeConsultation().get(i).setIdFichier(i+1);
+            }
+
+            for(Consultation consultation : listeConsultation) {
+                FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write(consultation.getId() + ";" + (consultation.getPatient().getId() - 1) + ";" + consultation.getNomMedecin() + ";" + consultation.getDate() + ";"  + consultation.getPathologies() + ";" + consultation.getAppareil() + ";" + consultation.getOctroi() + "\n");
+                bufferedWriter.close();
+                fileWriter.close();
+            }
+
+        }
+        catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 
 

@@ -80,7 +80,7 @@ public class AdminPanel extends JPanel {
 		add(labelError);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(298, 195, 655, 263);
+		scrollPane.setBounds(298, 191, 655, 250);
 		add(scrollPane);
 		
 		textFieldNumeroSS = new JTextField();
@@ -88,7 +88,7 @@ public class AdminPanel extends JPanel {
 		textFieldNumeroSS.setFont(new Font("Montserrat", Font.PLAIN, 12));
 		textFieldNumeroSS.setColumns(10);
 		textFieldNumeroSS.setBorder(new LineBorder(Color.WHITE));
-		textFieldNumeroSS.setBounds(687, 125, 270, 25);
+		textFieldNumeroSS.setBounds(681, 125, 269, 25);
 		add(textFieldNumeroSS);
 		
 		MaskFormatter formatter = new MaskFormatter("##/##/####");
@@ -99,7 +99,7 @@ public class AdminPanel extends JPanel {
 		textFieldDateDeNaissance.setFont(new Font("Montserrat", Font.PLAIN, 12));
 		textFieldDateDeNaissance.setColumns(10);
 		textFieldDateDeNaissance.setBorder(new LineBorder(Color.WHITE));
-		textFieldDateDeNaissance.setBounds(313, 125, 270, 25);
+		textFieldDateDeNaissance.setBounds(301, 125, 269, 25);
 		add(textFieldDateDeNaissance);
 
 		textFieldDateDeNaissance.setText("");
@@ -109,47 +109,51 @@ public class AdminPanel extends JPanel {
 		textFieldPrenom.setFont(new Font("Montserrat", Font.PLAIN, 12));
 		textFieldPrenom.setColumns(10);
 		textFieldPrenom.setBorder(new LineBorder(Color.WHITE));
-		textFieldPrenom.setBounds(687, 61, 270, 25);
+		textFieldPrenom.setBounds(681, 61, 269, 25);
 		add(textFieldPrenom);
 		
 		textFieldNom = new JTextField();
 		textFieldNom.setBorder(new LineBorder(Color.WHITE));
 		textFieldNom.setFont(new Font("Montserrat", Font.PLAIN, 12));
 		textFieldNom.setForeground(Color.BLACK);
-		textFieldNom.setBounds(313, 61, 270, 25);
+		textFieldNom.setBounds(301, 61, 269, 25);
 		add(textFieldNom);
 		textFieldNom.setColumns(10);
 		
 		buttonRechercher = new JButton("");
 		buttonRechercher.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonRechercherPressed.png")));
 		buttonRechercher.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonRechercherPressed.png")));
-		buttonRechercher.setBackground(new Color(153, 0, 255));
+		buttonRechercher.setBackground(null);
+		buttonRechercher.setOpaque(false);
 		buttonRechercher.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonRechercher.png")));
-		buttonRechercher.setBounds(63, 293, 113, 33);
+		buttonRechercher.setBounds(69, 291, 113, 33);
 		add(buttonRechercher);
 		
 		buttonSupprimer = new JButton("");
 		buttonSupprimer.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonSupprimerPressed.png")));
 		buttonSupprimer.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonSupprimerPressed.png")));
-		buttonSupprimer.setBackground(new Color(153, 0, 255));
+		buttonSupprimer.setBackground(null);
+		buttonSupprimer.setOpaque(false);
 		buttonSupprimer.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonSupprimer.png")));
-		buttonSupprimer.setBounds(71, 226, 97, 31);
+		buttonSupprimer.setBounds(72, 224, 107, 33);
 		add(buttonSupprimer);
 		
 		buttonModifier = new JButton("");
 		buttonModifier.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonModifierPressed.png")));
 		buttonModifier.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonModifierPressed.png")));
-		buttonModifier.setBackground(new Color(153, 0, 255));
+		buttonModifier.setBackground(null);
+		buttonModifier.setOpaque(false);
 		buttonModifier.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonModifier.png")));
-		buttonModifier.setBounds(78, 159, 82, 31);
+		buttonModifier.setBounds(80, 157, 91, 33);
 		add(buttonModifier);
 		
 		buttonAjouter = new JButton("");
 		buttonAjouter.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonAjouterPressed.png")));
 		buttonAjouter.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonAjouterPressed.png")));
-		buttonAjouter.setBackground(new Color(153, 0, 255));
+		buttonAjouter.setBackground(null);
+		buttonAjouter.setOpaque(false);
 		buttonAjouter.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonAjouter.png")));
-		buttonAjouter.setBounds(80, 93, 77, 31);
+		buttonAjouter.setBounds(83, 90, 84, 33);
 		add(buttonAjouter);
 
 		buttonAjouter.addActionListener(new ActionListener() {
@@ -191,10 +195,11 @@ public class AdminPanel extends JPanel {
 		});
 		
 		btnDeconnexion = new JButton("");
-		btnDeconnexion.setBackground(new Color(153, 0, 255));
+		btnDeconnexion.setBackground(null);
+		btnDeconnexion.setOpaque(false);
 		btnDeconnexion.setForeground(new Color(153, 0, 255));
 		btnDeconnexion.setIcon(new ImageIcon(AdminPanel.class.getResource("/buttonDeconnexion.png")));
-		btnDeconnexion.setBounds(56, 372, 125, 33);
+		btnDeconnexion.setBounds(63, 358, 125, 33);
 		btnDeconnexion.setPressedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonPressedDeconnexion.png")));
 		btnDeconnexion.setSelectedIcon(new ImageIcon(AdminPanel.class.getResource("/buttonPressedDeconnexion.png")));
 		add(btnDeconnexion);

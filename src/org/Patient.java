@@ -17,8 +17,6 @@ public class Patient {
     private String dateNaissance;
     private String nbSecuriteSociale;
     private ArrayList<Consultation> listeConsultationPatient;
-    
-    // Martin le bg
 
     public static ArrayList<Patient> listePatient = new ArrayList<>();
 
@@ -356,6 +354,7 @@ public class Patient {
         }
         throw new PatientNotFoundException("Patient introuvable");
     }
+
 
 
 }
