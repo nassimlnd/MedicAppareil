@@ -47,7 +47,7 @@ public class Frame extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("MedicAppareil");
 		setBounds(100, 100, 1000, 500);
-		setResizable(true);
+		setResizable(false);
 		loginPanel = new LoginPanel();
 		adminPanel = new AdminPanel();
 		medecinPanel = new MedecinPanel();

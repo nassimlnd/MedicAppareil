@@ -24,6 +24,7 @@ public class MedecinPanel extends JPanel {
 	DefaultTableModel defaultTableModel;
 	private JTextField textFieldNomMedecin;
 	private JTextField textFieldPathologies;
+	private JTextField textFieldAppareil;
 
 	/**
 	 * Create the panel.
@@ -51,6 +52,13 @@ public class MedecinPanel extends JPanel {
 				textFieldNomMedecin.setText(Consultation.getListeConsultation().get(ligneSelectionne).getNomMedecin());
 			}
 		});
+		
+		textFieldAppareil = new JTextField();
+		textFieldAppareil.setFont(new Font("Montserrat", Font.PLAIN, 12));
+		textFieldAppareil.setColumns(10);
+		textFieldAppareil.setBorder(new LineBorder(Color.WHITE));
+		textFieldAppareil.setBounds(682, 125, 267, 25);
+		add(textFieldAppareil);
 
 		initTab(defaultTableModel, table);
 
@@ -166,12 +174,17 @@ public class MedecinPanel extends JPanel {
 					Patient patient = Patient.getListePatient().get(comboBox.getSelectedIndex());
 					String nomMedecin = textFieldNomMedecin.getText();
 					String pathologies = textFieldPathologies.getText();
+					String appareil = textFieldAppareil.getText();
 
-					new Consultation(patient, pathologies, nomMedecin);
+					if (textFieldAppareil.getText().isEmpty()) {
+						new Consultation(patient, pathologies, nomMedecin);
+					}
+					else new Consultation(patient, pathologies, appareil, nomMedecin);
 
 					comboBox.setSelectedIndex(-1);
 					textFieldNomMedecin.setText("");
 					textFieldPathologies.setText("");
+					textFieldAppareil.setText("");
 
 					initTab(defaultTableModel, table);
 				} catch (EmptyFieldException emptyFieldException) {
@@ -186,9 +199,63 @@ public class MedecinPanel extends JPanel {
 			}
 		});
 
-	}
-	
+		buttonModifier.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nomMedecin = textFieldNomMedecin.getText();
+				String pathologies = textFieldPathologies.getText();
+				String appareil = textFieldAppareil.getText();
 
+				int ligneSelectionne = table.getSelectedRow();
+
+				Consultation consultationmodif = Consultation.getListeConsultation().get(ligneSelectionne);
+
+				if (!appareil.isEmpty()) {
+					consultationmodif.setAppareil(appareil);
+				}
+
+				consultationmodif.setNomMedecin(nomMedecin);
+				consultationmodif.setPathologies(pathologies);
+				consultationmodif.modif();
+
+				Consultation.initList();
+				initTab(defaultTableModel, table);
+
+				textFieldNomMedecin.setText("");
+				textFieldPathologies.setText("");
+				textFieldAppareil.setText("");
+				comboBox.setSelectedIndex(-1);
+			}
+		});
+
+		buttonSupprimer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int ligneSelectionne = table.getSelectedRow();
+
+				Consultation consultationsuppr = Consultation.getListeConsultation().get(ligneSelectionne);
+
+				PopupSupprimer popupSupprimer = new PopupSupprimer();
+				popupSupprimer.labelPatient.setText("La consultation de " + consultationsuppr.getPatient().getNom() + " " + consultationsuppr.getPatient().getPrenom());
+				popupSupprimer.buttonOui.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						consultationsuppr.supprimerConsultation();
+
+						initTab(defaultTableModel, table);
+
+						textFieldAppareil.setText("");
+						textFieldPathologies.setText("");
+						textFieldNomMedecin.setText("");
+						comboBox.setSelectedIndex(-1);
+
+						popupSupprimer.dispose();
+					}
+				});
+			}
+		});
+
+	}
 
 	public void initTab(DefaultTableModel defaultTableModel, JTable table) {
 		defaultTableModel.setRowCount(0);
