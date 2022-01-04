@@ -80,9 +80,6 @@ public class Consultation {
                     this.id = 1;
                 }
             }
-            if (!sc.hasNextLine()) {
-                this.id = 1;
-            }
         }
         else {
             file.createNewFile();
