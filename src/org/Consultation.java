@@ -41,6 +41,7 @@ public class Consultation {
         this.nomMedecin = nomMedecin;
         this.appareil = appareil;
         this.octroi = false;
+        ajouterConsultation(this.patient);
     }
 
     public Consultation(int id, Patient patient, String nomMedecin, String date, String pathologies, String appareil, boolean octroi) {
@@ -70,11 +71,17 @@ public class Consultation {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 String[] split = line.split(";");
+                if (Integer.parseInt(split[0]) <= 0) {
+                    this.id = 1;
+                }
                 try {
                     this.id = Integer.parseInt(split[0]) + 1;
                 } catch (NumberFormatException e) {
                     this.id = 1;
                 }
+            }
+            if (!sc.hasNextLine()) {
+                this.id = 1;
             }
         }
         else {
@@ -196,7 +203,7 @@ public class Consultation {
     public static void initList() {
         FileReader fileReader;
         Scanner sc;
-        boolean contains = false;
+        Consultation consultation;
         try {
             fileReader = new FileReader("consultation.txt");
             sc = new Scanner(fileReader);
@@ -206,7 +213,9 @@ public class Consultation {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 String[] split = line.split(";");
-                listeConsultation.add(new Consultation(Integer.parseInt(split[0]), Patient.getListePatient().get(Integer.parseInt(split[1])), split[2], split[3], split[4], split[5], Boolean.valueOf(split[6]).booleanValue()));
+                consultation = new Consultation(Integer.parseInt(split[0]), Patient.getListePatient().get(Integer.parseInt(split[1])), split[2], split[3], split[4], split[5], Boolean.valueOf(split[6]).booleanValue());
+                listeConsultation.add(consultation);
+                Patient.getListePatient().get(Integer.parseInt(split[1])).ajouterConsultation(consultation);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Fichier inexistant");
@@ -241,6 +250,54 @@ public class Consultation {
         catch (IOException ioException) {
             ioException.printStackTrace();
         }
+    }
+
+    public void modif() {
+        FileReader fileReader;
+        Scanner sc;
+        FileWriter fileWriter;
+        String oldLine = "";
+        String newLine;
+        String oldContent = "";
+        String newContent;
+
+        try {
+            File file = new File("consultation.txt");
+
+            fileReader = new FileReader(file.getAbsoluteFile());
+            sc = new Scanner(fileReader);
+
+            newLine = this.getId() + ";" + (this.getPatient().getId() - 1) + ";" + this.getNomMedecin() + ";" + this.getDate() + ";"  + this.getPathologies() + ";" + this.getAppareil() + ";" + this.getOctroi();
+
+            while (sc.hasNextLine()) {
+
+                String line = sc.nextLine();
+
+                oldContent += line + "\n";
+
+                if (Integer.parseInt(String.valueOf(line.charAt(0))) == this.id) {
+                    oldLine = line;
+                }
+            }
+
+            newContent = oldContent.replaceAll(oldLine, newLine);
+
+            fileWriter = new FileWriter("consultation.txt");
+            fileWriter.append(newContent);
+            fileWriter.flush();
+
+            fileReader.close();
+            sc.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void supprimerConsultation() {
+        listeConsultation.remove(this);
+        this.getPatient().supprimerConsulation(this);
+        initFichier();
     }
 
 

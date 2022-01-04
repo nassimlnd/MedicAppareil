@@ -1,10 +1,10 @@
 package GUI;
 
-import java.awt.Color;
+import org.Consultation;
+import org.Patient;
+
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,35 +15,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
-
-import org.Consultation;
-import org.Patient;
-
-import Exceptions.EmptyFieldException;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class TechnicienPanel extends JPanel {
 	static JTextField textFieldNom;
@@ -61,12 +34,12 @@ public class TechnicienPanel extends JPanel {
 	JTable table;
 	JLabel labelError;
 	DefaultTableModel defaultTableModel;
-	
-	
-	
-	
+
+
+
+
 	public static ArrayList<Consultation> listTech = new ArrayList<Consultation>();
-	
+
 	public TechnicienPanel() throws ParseException {
 		setLayout(null);
 
@@ -74,17 +47,17 @@ public class TechnicienPanel extends JPanel {
 
 		Consultation.initList();
 
-		String[] columns = {"Nom du patient", "Nom du médecin", "Date", "Pathologies diagnostiquées", "Appareil","statut" };
+		String[] columns = {"Nom du patient", "Nom du m?decin", "Date", "Pathologies diagnostiqu?es", "Appareil","statut" };
 
 		defaultTableModel = new DefaultTableModel(columns, 0);
 
 		table = new JTable(defaultTableModel);
-		
-		
 
-	init(defaultTableModel, table);
 
-		
+
+		init(defaultTableModel, table);
+
+
 		JScrollPane scrollPanetTable = new JScrollPane(table);
 		scrollPanetTable.setBounds(294, 40, 655, 389);
 		add(scrollPanetTable);
@@ -101,7 +74,7 @@ public class TechnicienPanel extends JPanel {
 		for (int i = 0; i < Patient.getListePatient().size(); i ++) {
 			names[i] = Patient.getListePatient().get(i).getNom() + " " + Patient.getListePatient().get(i).getPrenom() + " " + Patient.getListePatient().get(i).getDateNaissance();
 		}
-		
+
 		buttonDeconnexion = new JButton("");
 		buttonDeconnexion.setOpaque(false);
 		buttonDeconnexion.setBackground((Color) null);
@@ -110,7 +83,7 @@ public class TechnicienPanel extends JPanel {
 		buttonDeconnexion.setPressedIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonPressedDeconnexion.png")));
 		buttonDeconnexion.setBounds(63, 372, 125, 33);
 		add(buttonDeconnexion);
-		
+
 		JButton buttonRechercher = new JButton("");
 		buttonRechercher.setOpaque(false);
 		buttonRechercher.setBackground((Color) null);
@@ -119,7 +92,7 @@ public class TechnicienPanel extends JPanel {
 		buttonRechercher.setSelectedIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonRechercherPressed.png")));
 		buttonRechercher.setBounds(69, 293, 113, 33);
 		add(buttonRechercher);
-		
+
 		JButton buttonModifier = new JButton("");
 		buttonModifier.setBackground(null);
 		buttonModifier.setOpaque(false);
@@ -128,7 +101,7 @@ public class TechnicienPanel extends JPanel {
 		buttonModifier.setSelectedIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonModifierPressed.png")));
 		buttonModifier.setBounds(80, 157, 91, 33);
 		add(buttonModifier);
-		
+
 		background = new JLabel("");
 		background.addMouseListener(new MouseAdapter() {
 			@Override
@@ -137,67 +110,67 @@ public class TechnicienPanel extends JPanel {
 				if (table.getSelectedRow() != -1) {
 					table.clearSelection();
 
-					
+
 				}
 			}
 		});
 		buttonModifier.addActionListener(new ActionListener() {
-			
-			  FileReader fileReader;
-		        Scanner sc;
-		        FileWriter fileWriter;
-		        String oldLine = "";
-		        String newLine;
-		        String oldContent = "";
-		        String newContent;
+
+			FileReader fileReader;
+			Scanner sc;
+			FileWriter fileWriter;
+			String oldLine = "";
+			String newLine;
+			String oldContent = "";
+			String newContent;
 
 			public void actionPerformed(ActionEvent e1) {
 				int ligne = table.getSelectedRow();
 				if(listTech.get(ligne).getOctroi() == false) {
 					listTech.get(ligne).setOctroi(true);
-					
+
 				}else {
 					listTech.get(ligne).setOctroi(false);
 				}
-			
-			  
-		        try {
-		            File file = new File("consultation.txt");
 
-		            fileReader = new FileReader(file.getAbsoluteFile());
-		            sc = new Scanner(fileReader);
 
-		            newLine = listTech.get(ligne).getId() + ";" + (listTech.get(ligne).getPatient().getId()-1) + ";" + listTech.get(ligne).getNomMedecin() + ";" + listTech.get(ligne).getDate() + ";" + listTech.get(ligne).getPathologies()+";"+listTech.get(ligne).getAppareil()+";"+true;
+				try {
+					File file = new File("consultation.txt");
 
-		            while (sc.hasNextLine()) {
+					fileReader = new FileReader(file.getAbsoluteFile());
+					sc = new Scanner(fileReader);
 
-		                String line = sc.nextLine();
+					newLine = listTech.get(ligne).getId() + ";" + (listTech.get(ligne).getPatient().getId()-1) + ";" + listTech.get(ligne).getNomMedecin() + ";" + listTech.get(ligne).getDate() + ";" + listTech.get(ligne).getPathologies()+";"+listTech.get(ligne).getAppareil()+";"+true;
 
-		                oldContent += line + "\n";
+					while (sc.hasNextLine()) {
 
-		                if (Integer.parseInt(String.valueOf(line.charAt(0))) == listTech.get(ligne).getId()) {
-		                    oldLine = line;
-		                }
-		            }
+						String line = sc.nextLine();
 
-		            newContent = oldContent.replaceAll(oldLine, newLine);
+						oldContent += line + "\n";
 
-		            fileWriter = new FileWriter("consultation.txt");
-		            fileWriter.append(newContent);
-		            fileWriter.flush();
+						if (Integer.parseInt(String.valueOf(line.charAt(0))) == listTech.get(ligne).getId()) {
+							oldLine = line;
+						}
+					}
 
-		            fileReader.close();
-		            sc.close();
+					newContent = oldContent.replaceAll(oldLine, newLine);
 
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-				
+					fileWriter = new FileWriter("consultation.txt");
+					fileWriter.append(newContent);
+					fileWriter.flush();
 
-				
-				
+					fileReader.close();
+					sc.close();
 
-		        
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+
+
+
+
+
 			}
 		});
 
@@ -217,7 +190,7 @@ public class TechnicienPanel extends JPanel {
 		for (int i = 0; i < Consultation.getListeConsultation().size(); i ++) {
 			if (!Consultation.getListeConsultation().get(i).getAppareil().equals("null")||!Consultation.getListeConsultation().get(i).getAppareil().equals("")) {
 				listTech.add(Consultation.getListeConsultation().get(i));
-		
+
 			}}
 		for(int i = 0;i<listTech.size();i++) {
 			String nom = listTech.get(i).getPatient().getNom() + " " + listTech.get(i).getPatient().getPrenom();
@@ -227,14 +200,14 @@ public class TechnicienPanel extends JPanel {
 			String appareil = listTech.get(i).getAppareil();
 			String statut;
 			if (listTech.get(i).getOctroi()==true) {
-				 statut = "octroyer";
+				statut = "octroyer";
 			}else {
-				 statut="en attente";			
-				 }
-			
-			
-			    String[] data = {nom, nomMedecin, date, pathologies, appareil,statut};
-			
+				statut="en attente";
+			}
+
+
+			String[] data = {nom, nomMedecin, date, pathologies, appareil,statut};
+
 
 			defaultTableModel.addRow(data);
 		}

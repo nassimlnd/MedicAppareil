@@ -47,9 +47,9 @@ public class Frame extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("MedicAppareil");
 		setBounds(100, 100, 1000, 500);
-		setResizable(true);
+		setResizable(false);
 		loginPanel = new LoginPanel();
-		adminPanel = new AdminPanel();
+		AdminPanel adminPanel = new AdminPanel();
 		medecinPanel = new MedecinPanel();
 		technicienPanel = new TechnicienPanel();
 		setContentPane(loginPanel);
@@ -98,7 +98,9 @@ public class Frame extends JFrame {
 						loginPanel.textFieldMotDePasse.setText("");
 						loginPanel.buttonGroup.clearSelection();
 						loginPanel.setVisible(false);
+						Patient.initList();
 						Consultation.initList();
+						medecinPanel.initCombo(medecinPanel.comboBox);
 						setContentPane(medecinPanel);
 					}
 					else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("technicien")) {
@@ -138,7 +140,8 @@ public class Frame extends JFrame {
 				setContentPane(loginPanel);
 			}
 		});
-		TechnicienPanel.buttonDeconnexion.addActionListener(new ActionListener() {
+
+		technicienPanel.buttonDeconnexion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginPanel.setVisible(true);

@@ -1,4 +1,3 @@
-import Exceptions.PatientNotFoundException;
 import GUI.Frame;
 
 import javax.swing.*;
@@ -6,7 +5,7 @@ import java.text.ParseException;
 
 public class Main {
 
-    public static void main(String[] args) throws PatientNotFoundException {
+    public static void main(String[] args) {
 
         try {
             Frame frame = new Frame();
@@ -19,10 +18,8 @@ public class Main {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+            e.printStackTrace();
+        }
 
     }
 }
