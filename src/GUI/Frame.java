@@ -138,6 +138,13 @@ public class Frame extends JFrame {
 				setContentPane(loginPanel);
 			}
 		});
+		TechnicienPanel.buttonDeconnexion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loginPanel.setVisible(true);
+				setContentPane(loginPanel);
+			}
+		});
 
 
 	}
