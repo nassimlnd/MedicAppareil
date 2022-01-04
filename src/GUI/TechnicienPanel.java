@@ -35,25 +35,20 @@ public class TechnicienPanel extends JPanel {
 	JLabel labelError;
 	DefaultTableModel defaultTableModel;
 
-
-
-
 	public static ArrayList<Consultation> listTech = new ArrayList<Consultation>();
 
 	public TechnicienPanel() throws ParseException {
 		setLayout(null);
 
 		Patient.initList();
-
 		Consultation.initList();
+		initList();
 
 		String[] columns = {"Nom du patient", "Nom du m?decin", "Date", "Pathologies diagnostiqu?es", "Appareil","statut" };
 
 		defaultTableModel = new DefaultTableModel(columns, 0);
 
 		table = new JTable(defaultTableModel);
-
-
 
 		init(defaultTableModel, table);
 
@@ -68,12 +63,6 @@ public class TechnicienPanel extends JPanel {
 		labelError.setFont(new Font("Montserrat", Font.PLAIN, 11));
 		labelError.setBounds(459, 162, 332, 14);
 		add(labelError);
-
-
-		String names[] = new String[Patient.getListePatient().size()];
-		for (int i = 0; i < Patient.getListePatient().size(); i ++) {
-			names[i] = Patient.getListePatient().get(i).getNom() + " " + Patient.getListePatient().get(i).getPrenom() + " " + Patient.getListePatient().get(i).getDateNaissance();
-		}
 
 		buttonDeconnexion = new JButton("");
 		buttonDeconnexion.setOpaque(false);
@@ -109,22 +98,18 @@ public class TechnicienPanel extends JPanel {
 				int selectedRow = table.getSelectedRow();
 				if (table.getSelectedRow() != -1) {
 					table.clearSelection();
-
-
 				}
 			}
 		});
 		buttonModifier.addActionListener(new ActionListener() {
-
-			FileReader fileReader;
-			Scanner sc;
-			FileWriter fileWriter;
-			String oldLine = "";
-			String newLine;
-			String oldContent = "";
-			String newContent;
-
 			public void actionPerformed(ActionEvent e1) {
+				FileReader fileReader;
+				Scanner sc;
+				FileWriter fileWriter;
+				String oldLine = "";
+				String newLine;
+				String oldContent = "";
+				String newContent;
 				int ligne = table.getSelectedRow();
 				if(listTech.get(ligne).getOctroi() == false) {
 					listTech.get(ligne).setOctroi(true);
@@ -140,7 +125,7 @@ public class TechnicienPanel extends JPanel {
 					fileReader = new FileReader(file.getAbsoluteFile());
 					sc = new Scanner(fileReader);
 
-					newLine = listTech.get(ligne).getId() + ";" + (listTech.get(ligne).getPatient().getId()-1) + ";" + listTech.get(ligne).getNomMedecin() + ";" + listTech.get(ligne).getDate() + ";" + listTech.get(ligne).getPathologies()+";"+listTech.get(ligne).getAppareil()+";"+true;
+					newLine = listTech.get(ligne).getId() + ";" + (listTech.get(ligne).getPatient().getId()-1) + ";" + listTech.get(ligne).getNomMedecin() + ";" + listTech.get(ligne).getDate() + ";" + listTech.get(ligne).getPathologies()+";"+listTech.get(ligne).getAppareil()+";"+listTech.get(ligne).getOctroi();
 
 					while (sc.hasNextLine()) {
 
@@ -159,18 +144,15 @@ public class TechnicienPanel extends JPanel {
 					fileWriter.append(newContent);
 					fileWriter.flush();
 
+					initList();
+					init(defaultTableModel, table);
+
 					fileReader.close();
 					sc.close();
 
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
-
-
-
-
-
 			}
 		});
 
@@ -187,12 +169,7 @@ public class TechnicienPanel extends JPanel {
 		defaultTableModel.setRowCount(0);
 		table.revalidate();
 
-		for (int i = 0; i < Consultation.getListeConsultation().size(); i ++) {
-			if (!Consultation.getListeConsultation().get(i).getAppareil().equals("null")||!Consultation.getListeConsultation().get(i).getAppareil().equals("")) {
-				listTech.add(Consultation.getListeConsultation().get(i));
-
-			}}
-		for(int i = 0;i<listTech.size();i++) {
+		for (int i = 0;i<listTech.size();i++) {
 			String nom = listTech.get(i).getPatient().getNom() + " " + listTech.get(i).getPatient().getPrenom();
 			String nomMedecin = listTech.get(i).getNomMedecin();
 			String date = listTech.get(i).getDate();
@@ -213,6 +190,18 @@ public class TechnicienPanel extends JPanel {
 		}
 
 		defaultTableModel.fireTableDataChanged();
+	}
+
+	public void initList() {
+		listTech.clear();
+		for (Consultation consultation : Consultation.getListeConsultation()) {
+			if (consultation.getAppareil().equals("null") || consultation.getAppareil().equals("")) {
+				continue;
+			}
+			else {
+				listTech.add(consultation);
+			}
+		}
 	}
 
 
