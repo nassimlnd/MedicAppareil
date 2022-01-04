@@ -111,6 +111,10 @@ public class Frame extends JFrame {
 						loginPanel.textFieldMotDePasse.setText("");
 						loginPanel.buttonGroup.clearSelection();
 						loginPanel.setVisible(false);
+						Patient.initList();
+						Consultation.initList();
+						technicienPanel.initList();
+						technicienPanel.init(technicienPanel.defaultTableModel, technicienPanel.table);
 						setContentPane(technicienPanel);
 					}
 					else {
