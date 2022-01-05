@@ -37,13 +37,10 @@ public class AdminPanel extends JPanel {
 	 */
 	public AdminPanel() throws ParseException {
 		setLayout(null);
-
 		Patient.initList();
 
 		String[] columns = {"Nom", "Prénom", "Date de naissance", "Numéro de sécurité sociale" };
-
 		defaultTableModel = new DefaultTableModel(columns, 0);
-
 		table = new JTable(defaultTableModel);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -60,17 +57,7 @@ public class AdminPanel extends JPanel {
 			}
 		});
 
-		for (int i = 0; i < Patient.getListePatient().size(); i ++) {
-			String nom = Patient.getListePatient().get(i).getNom();
-			String prenom = Patient.getListePatient().get(i).getPrenom();
-			String datedenaissance = Patient.getListePatient().get(i).getDateNaissance();
-			String numeross = Patient.getListePatient().get(i).getNbSecuriteSociale();
-
-			String[] data = {nom, prenom, datedenaissance, numeross};
-
-			defaultTableModel.addRow(data);
-
-		}
+		initTab(defaultTableModel, table);
 		
 		labelError = new JLabel();
 		labelError.setHorizontalAlignment(SwingConstants.CENTER);

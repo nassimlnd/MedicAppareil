@@ -2,7 +2,6 @@ package GUI;
 
 import org.Consultation;
 import org.Patient;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -14,21 +13,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TechnicienPanel extends JPanel {
+	// Attributs
+
 	static JTextField textFieldNom;
 	static JTextField textFieldNomMedecin;
 	static JFormattedTextField textFieldDate;
 	static JTextField textFieldPathologies;
 	static JTextField textFieldStatut;
-
-	/**
-	 * Create the panel.
-	 */
-
 	JLabel background;
 	static JButton buttonDeconnexion;
 	JTable table;
@@ -37,24 +32,21 @@ public class TechnicienPanel extends JPanel {
 
 	public static ArrayList<Consultation> listTech = new ArrayList<Consultation>();
 
-	public TechnicienPanel() throws ParseException {
-		setLayout(null);
+	// Constructeur
 
+	public TechnicienPanel() {
+		setLayout(null);
 		Patient.initList();
 		Consultation.initList();
 		initList();
 
 		String[] columns = {"Nom du patient", "Nom du m?decin", "Date", "Pathologies diagnostiqu?es", "Appareil","statut" };
-
 		defaultTableModel = new DefaultTableModel(columns, 0);
-
 		table = new JTable(defaultTableModel);
-
 		init(defaultTableModel, table);
 
-
 		JScrollPane scrollPanetTable = new JScrollPane(table);
-		scrollPanetTable.setBounds(294, 40, 655, 389);
+		scrollPanetTable.setBounds(298, 34, 655, 420);
 		add(scrollPanetTable);
 
 		labelError = new JLabel();
@@ -70,7 +62,7 @@ public class TechnicienPanel extends JPanel {
 		buttonDeconnexion.setIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonDeconnexion.png")));
 		buttonDeconnexion.setSelectedIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonPressedDeconnexion.png")));
 		buttonDeconnexion.setPressedIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonPressedDeconnexion.png")));
-		buttonDeconnexion.setBounds(63, 372, 125, 33);
+		buttonDeconnexion.setBounds(63, 299, 125, 33);
 		add(buttonDeconnexion);
 
 		JButton buttonRechercher = new JButton("");
@@ -79,7 +71,7 @@ public class TechnicienPanel extends JPanel {
 		buttonRechercher.setIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonRechercher.png")));
 		buttonRechercher.setPressedIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonRechercherPressed.png")));
 		buttonRechercher.setSelectedIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonRechercherPressed.png")));
-		buttonRechercher.setBounds(69, 293, 113, 33);
+		buttonRechercher.setBounds(69, 233, 113, 33);
 		add(buttonRechercher);
 
 		JButton buttonModifier = new JButton("");
@@ -88,10 +80,17 @@ public class TechnicienPanel extends JPanel {
 		buttonModifier.setIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonModifier.png")));
 		buttonModifier.setPressedIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonModifierPressed.png")));
 		buttonModifier.setSelectedIcon(new ImageIcon(MedecinPanel.class.getResource("/buttonModifierPressed.png")));
-		buttonModifier.setBounds(80, 157, 91, 33);
+		buttonModifier.setBounds(80, 167, 91, 33);
 		add(buttonModifier);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(219, 232, 46, 14);
+		add(lblNewLabel);
 
 		background = new JLabel("");
+		background.setLocation(0, 0);
+		background.setSize(1000, 500);
+		background.setIcon(new ImageIcon(TechnicienPanel.class.getResource("/backgroundTechnicienPanel.png")));
 		background.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -101,6 +100,8 @@ public class TechnicienPanel extends JPanel {
 				}
 			}
 		});
+		add(background);
+		
 		buttonModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
 				FileReader fileReader;
@@ -111,13 +112,13 @@ public class TechnicienPanel extends JPanel {
 				String oldContent = "";
 				String newContent;
 				int ligne = table.getSelectedRow();
+
 				if(listTech.get(ligne).getOctroi() == false) {
 					listTech.get(ligne).setOctroi(true);
-
-				}else {
+				}
+				else {
 					listTech.get(ligne).setOctroi(false);
 				}
-
 
 				try {
 					File file = new File("consultation.txt");
@@ -156,7 +157,6 @@ public class TechnicienPanel extends JPanel {
 			}
 		});
 
-
 		buttonRechercher.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -165,6 +165,9 @@ public class TechnicienPanel extends JPanel {
 		});
 
 	}
+
+	// Méthodes
+
 	public void init(DefaultTableModel defaultTableModel, JTable table) {
 		defaultTableModel.setRowCount(0);
 		table.revalidate();
@@ -176,16 +179,15 @@ public class TechnicienPanel extends JPanel {
 			String pathologies = listTech.get(i).getPathologies();
 			String appareil = listTech.get(i).getAppareil();
 			String statut;
+
 			if (listTech.get(i).getOctroi()==true) {
-				statut = "octroyer";
-			}else {
-				statut="en attente";
+				statut = "Octroyé";
+			}
+			else {
+				statut = "En attente";
 			}
 
-
 			String[] data = {nom, nomMedecin, date, pathologies, appareil,statut};
-
-
 			defaultTableModel.addRow(data);
 		}
 
@@ -203,8 +205,6 @@ public class TechnicienPanel extends JPanel {
 			}
 		}
 	}
-
-
 }
 
 

@@ -4,6 +4,7 @@ import Exceptions.PatientAlreadyPresentException;
 import Exceptions.PatientNotFoundException;
 
 import java.io.*;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,17 +24,13 @@ public class Patient {
     // Constructeur
 
     public Patient(String nom, String prenom, String dateNaissance, String nbSecuriteSociale) throws PatientAlreadyPresentException, NumberFormatException, IOException {
-
-            this.setId();
-            this.nom = nom;
-            this.prenom = prenom;
-
-            this.setDateNaissance(dateNaissance);
-            this.setNbSecuriteSociale(nbSecuriteSociale);
-
-            this.listeConsultationPatient = new ArrayList<>();
-
-            this.ajouterPatient();
+        this.setId();
+        this.nom = nom;
+        this.prenom = prenom;
+        this.setDateNaissance(dateNaissance);
+        this.setNbSecuriteSociale(nbSecuriteSociale);
+        this.listeConsultationPatient = new ArrayList<>();
+        this.ajouterPatient();
 
     }
 
@@ -58,6 +55,7 @@ public class Patient {
     }
 
     public void setId() throws IOException {
+        // Set l'id en fonction du dernier ID de la liste de patient
         FileReader fileReader;
         Scanner sc;
         try {
@@ -119,8 +117,16 @@ public class Patient {
         return nbSecuriteSociale;
     }
 
-    public void setNbSecuriteSociale(String nbSecuriteSociale) {
-        if (String.valueOf(nbSecuriteSociale).length() != 13) {
+    public void setNbSecuriteSociale(String nbSecuriteSociale) throws NumberFormatException {
+        // Check si le numéro de sécurité sociale ne contient uniquement des chiffres et éxactement 13 caractères.
+        try {
+            Float nb = Float.parseFloat(nbSecuriteSociale);
+        }
+        catch (NumberFormatException exception) {
+            throw new NumberFormatException("Numéro de sécurité sociale incorrect.");
+        }
+
+        if (nbSecuriteSociale.length() != 13) {
             throw new NumberFormatException("Numéro de sécurité sociale incorrect.");
         }
 
@@ -132,9 +138,10 @@ public class Patient {
     }
 
     public void setDateNaissance(String dateNaissance) {
+        // Check si la date de naissance est correcte.
         String[] date = dateNaissance.split("/");
 
-        if (date[0].length() != 2 || date[1].length() != 2 || date[2].length() != 4) {
+        if (date[0].length() != 2 || date[1].length() != 2 || date[2].length() != 4 || Integer.parseInt(date[0]) > 31 || Integer.parseInt(date[0]) < 1 || Integer.parseInt(date[1]) > 12 || Integer.parseInt(date[1]) < 1 || Integer.parseInt(date[2]) < 1900 || Integer.parseInt(date[2]) > YearMonth.now().getYear()) {
             throw new NumberFormatException("Date de naissance incorrecte.");
         }
         this.dateNaissance = dateNaissance;
