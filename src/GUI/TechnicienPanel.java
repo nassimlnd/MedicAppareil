@@ -1,7 +1,9 @@
 package GUI;
 
+import Exceptions.ConsultationNotFoundException;
 import org.Consultation;
 import org.Patient;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -9,26 +11,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TechnicienPanel extends JPanel {
 	// Attributs
 
-	static JTextField textFieldNom;
-	static JTextField textFieldNomMedecin;
-	static JFormattedTextField textFieldDate;
-	static JTextField textFieldPathologies;
-	static JTextField textFieldStatut;
-	JLabel background;
+	private JLabel background;
 	static JButton buttonDeconnexion;
-	JTable table;
-	JLabel labelError;
-	DefaultTableModel defaultTableModel;
+	public static JTable table;
+	private static JLabel labelError;
+	public static DefaultTableModel defaultTableModel;
 
 	public static ArrayList<Consultation> listTech = new ArrayList<Consultation>();
 
@@ -160,15 +154,27 @@ public class TechnicienPanel extends JPanel {
 		buttonRechercher.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PopupRecherche popupRecherche = new PopupRecherche();
+				PopupRechercheTechnicien popupRechercheTechnicien = new PopupRechercheTechnicien();
 			}
 		});
 
 	}
 
+	// Getter and setters
+
+	public static ArrayList<Consultation> getListTech() {
+		return listTech;
+	}
+
+	public static void setListTech(ArrayList<Consultation> listTech) {
+		TechnicienPanel.listTech = listTech;
+	}
+
+
 	// Méthodes
 
 	public void init(DefaultTableModel defaultTableModel, JTable table) {
+		// Init le tableau
 		defaultTableModel.setRowCount(0);
 		table.revalidate();
 
@@ -194,7 +200,8 @@ public class TechnicienPanel extends JPanel {
 		defaultTableModel.fireTableDataChanged();
 	}
 
-	public void initList() {
+	public static void initList() {
+		// Init la liste des consultations avec uniquement des appareils
 		listTech.clear();
 		for (Consultation consultation : Consultation.getListeConsultation()) {
 			if (consultation.getAppareil().equals("null") || consultation.getAppareil().equals("")) {
@@ -204,6 +211,36 @@ public class TechnicienPanel extends JPanel {
 				listTech.add(consultation);
 			}
 		}
+	}
+
+	public static int recherche(String value) throws FileNotFoundException, ConsultationNotFoundException {
+		// Fonction de recherche
+		FileReader fileReader;
+		Scanner sc;
+		int id;
+
+		fileReader = new FileReader("consultation.txt");
+		sc = new Scanner(fileReader);
+
+		while(sc.hasNextLine()) {
+			String line = sc.nextLine();
+			String[] split = line.split(";");
+			String nom = Patient.getListePatient().get(Integer.parseInt(split[1])).getNom() + Patient.getListePatient().get(Integer.parseInt(split[1])).getPrenom();
+			if (split[5].equals("null") || split[5].equals("")) {
+				continue;
+			}
+			else {
+				if (line.contains(value)) {
+					id = Integer.parseInt(split[0]);
+					return id;
+				}
+				else if (nom.toLowerCase().contains(value)) {
+					id  = Integer.parseInt(split[0]);
+					return id;
+				}
+			}
+		}
+		throw new ConsultationNotFoundException("Consulatation introuvable.");
 	}
 }
 

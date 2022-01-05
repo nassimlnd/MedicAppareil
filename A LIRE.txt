@@ -1,0 +1,1 @@
+Pour vous connecter, les identifiants sont dans le fichier comptes.txt au 3ème rang et les mdp sont 1234 hashés en md5.

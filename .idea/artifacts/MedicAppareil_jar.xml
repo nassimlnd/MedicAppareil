@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MedicAppareil:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MedicAppareil_jar</output-path>
+    <root id="archive" name="MedicAppareil.jar">
+      <element id="module-output" name="MedicAppareil" />
+    </root>
+  </artifact>
+</component>

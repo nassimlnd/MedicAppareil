@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="MedicAppareil:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="8aa4deb6-3837-47c5-b380-cb39ec1eecb1" name="Changes" comment="" />
+    <list default="true" id="8aa4deb6-3837-47c5-b380-cb39ec1eecb1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/MedicAppareil_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/syntheticaSimple2D.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MedicAppareil.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MedicAppareil.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consultation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/consultation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Frame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/LoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/img/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/img/connexionButton.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/img/connexionButtonSelected.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/Connexion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/Connexion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/Consultation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/Consultation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/Statistiques.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,8 +60,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/GitHub/MedicAppareil" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15136719" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -48,7 +71,7 @@
       <recent name="Exceptions" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="MedicAppareil" />
@@ -56,9 +79,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RechercheMedecin" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.RechercheMedecin" />
+      <module name="MedicAppareil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.RechercheMedecin" />
       </list>
     </recent_temporary>
   </component>
@@ -84,5 +121,31 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/org/Consultation.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/org/Consultation.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GUI/Frame.java</url>
+          <line>98</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="java.lang.String" memberName="value" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

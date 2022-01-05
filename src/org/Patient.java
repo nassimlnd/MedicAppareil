@@ -196,6 +196,7 @@ public class Patient {
     }
 
     void ajouterPatient() throws IOException, PatientAlreadyPresentException {
+        // Ajoute le patient au fichier texte et si le fichier n'existe pas le créer.
         File file = new File("patient.txt");
 
         if (!file.exists()) {
@@ -227,6 +228,7 @@ public class Patient {
     }
 
     public void modif() {
+        // Modifie le patient dans le fichier texte.
         FileReader fileReader;
         Scanner sc;
         FileWriter fileWriter;
@@ -269,6 +271,7 @@ public class Patient {
     }
 
     public void initFichier() {
+        // Initialise le fichier texte à partir de la liste de Patient.
         try {
             File file = new File("patient.txt");
 
@@ -307,6 +310,7 @@ public class Patient {
     }
 
     public static void initList() {
+        // Initialise la liste de Patient à partir du fichier texte.
         FileReader fileReader;
         Scanner sc;
         boolean contains = false;
@@ -338,11 +342,13 @@ public class Patient {
     }
 
     public void supprimerPatient() {
+        // Supprime le patient de la liste de Patient et reinitialise le fichier texte en prenant en compte la nouvelle liste.
         listePatient.remove(this);
         initFichier();
     }
 
     public static int recherche(String value) throws FileNotFoundException, PatientNotFoundException {
+        //Recherche d'un patient dans le fichier texte.
         FileReader fileReader;
         Scanner sc;
         int id;
@@ -354,7 +360,7 @@ public class Patient {
             String line = sc.nextLine();
             String[] split = line.split(";");
 
-            if (line.contains(value)) {
+            if (line.toLowerCase().contains(value)) {
                 id = Integer.parseInt(split[0]);
                 return id;
             }

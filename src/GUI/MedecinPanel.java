@@ -13,49 +13,38 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MedecinPanel extends JPanel {
+	// Attributs
 
 	JLabel background;
 	JButton buttonDeconnexion;
-	JComboBox comboBox;
-	JTable table;
+	static JComboBox comboBox;
+	public static JTable table;
 	JLabel labelError;
 	DefaultTableModel defaultTableModel;
 	public String[] names;
-	private JTextField textFieldNomMedecin;
-	private JTextField textFieldPathologies;
-	private JTextField textFieldAppareil;
+	public static JTextField textFieldNomMedecin;
+	public static JComboBox textFieldPathologies;
+	public static JTextField textFieldAppareil;
 
-	/**
-	 * Create the panel.
-	 */
+	// Constructeur
+
 	public MedecinPanel() {
 		setLayout(null);
-
 		Consultation.initList();
 
 		String[] columns = {"Nom du patient", "Nom du médecin", "Date", "Pathologies diagnostiquées", "Appareil" };
-
 		defaultTableModel = new DefaultTableModel(columns, 0);
-
 		table = new JTable(defaultTableModel);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int ligneSelectionne = table.getSelectedRow();
-
-				String value = (String) table.getValueAt(ligneSelectionne, 2);
-
-				Consultation consultation = Consultation.getListeConsultation().get(ligneSelectionne);
-
-				comboBox.setSelectedIndex(consultation.getPatient().getId() - 1);
-
-				textFieldPathologies.setText(consultation.getPathologies());
-				textFieldNomMedecin.setText(consultation.getNomMedecin());
-				textFieldAppareil.setText(consultation.getAppareil());
+				setFields();
 			}
 		});
+		initTab(defaultTableModel, table);
 		
 		textFieldAppareil = new JTextField();
 		textFieldAppareil.setFont(new Font("Montserrat", Font.PLAIN, 12));
@@ -63,9 +52,6 @@ public class MedecinPanel extends JPanel {
 		textFieldAppareil.setBorder(new LineBorder(Color.WHITE));
 		textFieldAppareil.setBounds(682, 125, 267, 25);
 		add(textFieldAppareil);
-
-		initTab(defaultTableModel, table);
-
 		
 		JScrollPane scrollPanetTable = new JScrollPane(table);
 		scrollPanetTable.setBounds(298, 191, 655, 263);
@@ -78,12 +64,11 @@ public class MedecinPanel extends JPanel {
 		labelError.setBounds(459, 162, 332, 14);
 		add(labelError);
 		
-		textFieldPathologies = new JTextField();
-		textFieldPathologies.setBorder(new LineBorder(Color.WHITE));
+		textFieldPathologies = new JComboBox();
 		textFieldPathologies.setFont(new Font("Montserrat", Font.PLAIN, 12));
-		textFieldPathologies.setBounds(682, 61, 267, 25);
-		textFieldPathologies.setColumns(10);
+		textFieldPathologies.setBounds(675, 55, 279, 33);
 		add(textFieldPathologies);
+		textFieldPathologies.setSelectedIndex(-1);
 
 		
 		textFieldNomMedecin = new JTextField();
@@ -150,15 +135,7 @@ public class MedecinPanel extends JPanel {
 		background.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int selectedRow = table.getSelectedRow();
-				if (table.getSelectedRow() != -1) {
-					table.clearSelection();
-
-					comboBox.setSelectedIndex(-1);
-					textFieldNomMedecin.setText("");
-					textFieldPathologies.setText("");
-					textFieldAppareil.setText("");
-				}
+				clearFields();
 			}
 		});
 		background.setIcon(new ImageIcon(MedecinPanel.class.getResource("/backgroundMedecinPanel.png")));
@@ -169,13 +146,13 @@ public class MedecinPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (textFieldPathologies.getText().isEmpty() || textFieldNomMedecin.getText().isEmpty()) {
+					if (textFieldPathologies.getSelectedIndex() == -1 || textFieldNomMedecin.getText().isEmpty()) {
 						throw new EmptyFieldException();
 					}
 
 					Patient patient = Patient.getListePatient().get(comboBox.getSelectedIndex());
 					String nomMedecin = textFieldNomMedecin.getText();
-					String pathologies = textFieldPathologies.getText();
+					String pathologies = textFieldPathologies.getSelectedItem().toString();
 					String appareil = textFieldAppareil.getText();
 
 					if (textFieldAppareil.getText().isEmpty()) {
@@ -185,7 +162,7 @@ public class MedecinPanel extends JPanel {
 
 					comboBox.setSelectedIndex(-1);
 					textFieldNomMedecin.setText("");
-					textFieldPathologies.setText("");
+					textFieldPathologies.setSelectedIndex(-1);
 					textFieldAppareil.setText("");
 
 					initTab(defaultTableModel, table);
@@ -205,7 +182,7 @@ public class MedecinPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nomMedecin = textFieldNomMedecin.getText();
-				String pathologies = textFieldPathologies.getText();
+				String pathologies = textFieldPathologies.getSelectedItem().toString();
 				String appareil = textFieldAppareil.getText();
 
 				int ligneSelectionne = table.getSelectedRow();
@@ -224,7 +201,7 @@ public class MedecinPanel extends JPanel {
 				initTab(defaultTableModel, table);
 
 				textFieldNomMedecin.setText("");
-				textFieldPathologies.setText("");
+				textFieldPathologies.setSelectedIndex(-1);
 				textFieldAppareil.setText("");
 				comboBox.setSelectedIndex(-1);
 			}
@@ -247,7 +224,7 @@ public class MedecinPanel extends JPanel {
 						initTab(defaultTableModel, table);
 
 						textFieldAppareil.setText("");
-						textFieldPathologies.setText("");
+						textFieldPathologies.setSelectedIndex(-1);
 						textFieldNomMedecin.setText("");
 						comboBox.setSelectedIndex(-1);
 
@@ -266,7 +243,10 @@ public class MedecinPanel extends JPanel {
 
 	}
 
+	// Méthodes
+
 	public void initTab(DefaultTableModel defaultTableModel, JTable table) {
+		// Initialise le tableau
 		defaultTableModel.setRowCount(0);
 		table.revalidate();
 
@@ -285,7 +265,45 @@ public class MedecinPanel extends JPanel {
 		defaultTableModel.fireTableDataChanged();
 	}
 
+	public void initPathologies() {
+		ArrayList<String> pathologies = new ArrayList<>();
+		for (int i = 0; i < 10; i ++) {
+			pathologies.add("Pathologies " + i);
+		}
+
+		textFieldPathologies.setModel(new DefaultComboBoxModel<String>(pathologies.toArray(new String[0])));
+	}
+
 	public void initCombo(JComboBox comboBox) {
+		// Initialise la comboBox
 		comboBox.setModel(new DefaultComboBoxModel<Patient>(Patient.getListePatient().toArray(new Patient[0])));
 	}
+
+	public static void setFields() {
+		// Set les fields de la ligne sélectionnée.
+		int ligneSelectionne = table.getSelectedRow();
+
+		String value = (String) table.getValueAt(ligneSelectionne, 2);
+
+		Consultation consultation = Consultation.getListeConsultation().get(ligneSelectionne);
+
+		comboBox.setSelectedIndex(consultation.getPatient().getId() - 1);
+
+		textFieldPathologies.setSelectedIndex(Integer.parseInt(String.valueOf(consultation.getPathologies().charAt(consultation.getPathologies().length() - 1))));
+		textFieldNomMedecin.setText(consultation.getNomMedecin());
+		textFieldAppareil.setText(consultation.getAppareil());
+	}
+
+	public static void clearFields() {
+		// Clear les fields si une ligne est sélectionnée.
+		if (table.getSelectedRow() != -1) {
+			table.clearSelection();
+
+			comboBox.setSelectedIndex(-1);
+			textFieldNomMedecin.setText("");
+			textFieldPathologies.setSelectedIndex(-1);
+			textFieldAppareil.setText("");
+		}
+	}
+
 }

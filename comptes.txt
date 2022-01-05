@@ -1,3 +1,3 @@
-1;admin;mago;81dc9bdb52d04dc20036dbd8313ed055
-2;medecin;mago;81dc9bdb52d04dc20036dbd8313ed055
-3;technicien;mago;81dc9bdb52d04dc20036dbd8313ed055
+1;admin;admin;81dc9bdb52d04dc20036dbd8313ed055
+2;medecin;medecin;81dc9bdb52d04dc20036dbd8313ed055
+3;technicien;technicien;81dc9bdb52d04dc20036dbd8313ed055

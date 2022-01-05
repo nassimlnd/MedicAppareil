@@ -6,20 +6,21 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class LoginPanel extends JPanel {
+	// Attributs
 	
-	JTextField textFieldIdentifiant;
-	JPasswordField textFieldMotDePasse;
+	static JTextField textFieldIdentifiant;
+	static JPasswordField textFieldMotDePasse;
 	boolean connected = false;
-	JButton btnConnexion;
-	JRadioButton radioButtonAdmin;
-	JRadioButton radioButtonTechnicien;
-	JRadioButton radioButtonMedecin;
-	JLabel labelErreur;
-	ButtonGroup buttonGroup;
+	static JButton btnConnexion;
+	static JRadioButton radioButtonAdmin;
+	static JRadioButton radioButtonTechnicien;
+	static JRadioButton radioButtonMedecin;
+	static JLabel labelErreur;
+	static ButtonGroup buttonGroup;
+	static JButton buttonStatistiques;
 
-	/**
-	 * Create the panel.
-	 */
+	// Constructeur
+
 	public LoginPanel() {
 		setLayout(null);
 		buttonGroup = new ButtonGroup();
@@ -29,6 +30,15 @@ public class LoginPanel extends JPanel {
 		btnConnexion.setIcon(new ImageIcon(LoginPanel.class.getResource("/connexionButton.png")));
 		btnConnexion.setBounds(703, 328, 140, 44);
 		ImageIcon imageIcon = new ImageIcon("/connexionButtonSelected.png");
+		
+		buttonStatistiques = new JButton("");
+		buttonStatistiques.setBackground(null);
+		buttonStatistiques.setOpaque(false);
+		buttonStatistiques.setIcon(new ImageIcon(LoginPanel.class.getResource("/buttonStatistiques.png")));
+		buttonStatistiques.setSelectedIcon(new ImageIcon(LoginPanel.class.getResource("/buttonStatistiquesPressed.png")));
+		buttonStatistiques.setPressedIcon(new ImageIcon(LoginPanel.class.getResource("/buttonStatistiquesPressed.png")));
+		buttonStatistiques.setBounds(194, 380, 115, 33);
+		add(buttonStatistiques);
 		
 		labelErreur = new JLabel("Identifiant ou mot de passe incorrect.");
 		labelErreur.setHorizontalAlignment(SwingConstants.CENTER);

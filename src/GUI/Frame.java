@@ -14,33 +14,17 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 
 public class Frame extends JFrame {
+	// Attributs
 
 	private JPanel contentPane;
 	private LoginPanel loginPanel;
     private AdminPanel adminPanel;
 	private MedecinPanel medecinPanel;
 	private TechnicienPanel technicienPanel;
+	private StatsPanel statsPanel;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Frame frame = new Frame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	// Constructeur
 
-	/**
-	 * Create the frame.
-	 * @throws ParseException 
-	 */
 	public Frame() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParseException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Frame.class.getResource("/connexionButton.png")));
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -49,9 +33,10 @@ public class Frame extends JFrame {
 		setBounds(100, 100, 1000, 500);
 		setResizable(false);
 		loginPanel = new LoginPanel();
-		AdminPanel adminPanel = new AdminPanel();
+		adminPanel = new AdminPanel();
 		medecinPanel = new MedecinPanel();
 		technicienPanel = new TechnicienPanel();
+		statsPanel = new StatsPanel();
 		setContentPane(loginPanel);
 		contentPane = loginPanel;
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -80,52 +65,42 @@ public class Frame extends JFrame {
 
 				try {
 					if (Connexion.connect(type, identifiant, motdepasse) && type.equals("admin")) {
-						System.out.println("Connexion réussie");
-						loginPanel.connected = true;
-						loginPanel.labelErreur.setForeground(Color.WHITE);
-						loginPanel.textFieldIdentifiant.setText("");
-						loginPanel.textFieldMotDePasse.setText("");
-						loginPanel.buttonGroup.clearSelection();
-						loginPanel.setVisible(false);
-						Patient.initList();
+						login(loginPanel);
+						initAllList();
 						setContentPane(adminPanel);
 					}
 					else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("medecin")) {
-						System.out.println("Connexion réussie");
-						loginPanel.connected = true;
-						loginPanel.labelErreur.setForeground(Color.WHITE);
-						loginPanel.textFieldIdentifiant.setText("");
-						loginPanel.textFieldMotDePasse.setText("");
-						loginPanel.buttonGroup.clearSelection();
-						loginPanel.setVisible(false);
-						Patient.initList();
-						Consultation.initList();
+						login(loginPanel);
+						initAllList();
 						medecinPanel.initCombo(medecinPanel.comboBox);
+						medecinPanel.initPathologies();
 						setContentPane(medecinPanel);
 					}
 					else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("technicien")) {
-						System.out.println("Connexion réussie");
-						loginPanel.connected = true;
-						loginPanel.labelErreur.setForeground(Color.WHITE);
-						loginPanel.textFieldIdentifiant.setText("");
-						loginPanel.textFieldMotDePasse.setText("");
-						loginPanel.buttonGroup.clearSelection();
-						loginPanel.setVisible(false);
-						Patient.initList();
-						Consultation.initList();
-						technicienPanel.initList();
+						login(loginPanel);
+						initAllList();
 						technicienPanel.init(technicienPanel.defaultTableModel, technicienPanel.table);
 						setContentPane(technicienPanel);
 					}
 					else {
 						loginPanel.labelErreur.setForeground(Color.RED);
-						System.out.println("Connexion échoué");
 					}
 				} catch (AccountNotFoundException ex) {
 					ex.printStackTrace();
 				} catch (FileNotFoundException ex) {
 					ex.printStackTrace();
 				}
+			}
+		});
+
+		loginPanel.buttonStatistiques.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				statsPanel.initVar();
+				statsPanel.refreshLabel();
+
+				loginPanel.setVisible(false);
+				setContentPane(statsPanel);
 			}
 		});
 
@@ -153,6 +128,32 @@ public class Frame extends JFrame {
 			}
 		});
 
+		statsPanel.buttonRetour.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loginPanel.setVisible(true);
+				setContentPane(loginPanel);
+			}
+		});
+	}
 
+	// Méthodes
+
+	public static void login(LoginPanel loginPanel) {
+		// Se connecte et clear les fields
+		loginPanel.connected = true;
+		loginPanel.labelErreur.setForeground(Color.WHITE);
+		loginPanel.textFieldIdentifiant.setText("");
+		loginPanel.textFieldMotDePasse.setText("");
+		loginPanel.buttonGroup.clearSelection();
+		loginPanel.setVisible(false);
+	}
+
+	public static void initAllList() {
+		// Initialise toutes les listes afin d'actualiser.
+		Patient.initList();
+		Consultation.initList();
+		TechnicienPanel.initList();
+		Consultation.initPatListe();
 	}
 }

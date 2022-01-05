@@ -1,5 +1,6 @@
 package GUI;
 
+import org.Consultation;
 import org.Patient;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 public class RechercheMedecin extends JDialog {
 	private JTable table;
 	DefaultTableModel defaultTableModel;
+	public int idCons;
 
 	/**
 	 * Launch the application.
@@ -113,7 +115,22 @@ public class RechercheMedecin extends JDialog {
 		buttonValider.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int rowSelected = table.getSelectedRow();
+				Patient patient;
 
+				patient = Patient.getListePatient().get(comboBox.getSelectedIndex());
+				idCons = patient.getListeConsultationPatient().get(rowSelected).getId();
+
+				MedecinPanel.table.setRowSelectionInterval(idCons, idCons);
+
+				Consultation consultation = Consultation.getListeConsultation().get(idCons);
+
+				MedecinPanel.comboBox.setSelectedIndex(consultation.getPatient().getId() - 1);
+
+				MedecinPanel.textFieldPathologies.setSelectedIndex(Integer.parseInt(String.valueOf(consultation.getPathologies().charAt(consultation.getPathologies().length() - 1))));
+				MedecinPanel.textFieldNomMedecin.setText(consultation.getNomMedecin());
+				MedecinPanel.textFieldAppareil.setText(consultation.getAppareil());
+				dispose();
 			}
 		});
 		

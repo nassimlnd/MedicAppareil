@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 public class AdminPanel extends JPanel {
+	// Attributs
 
 	static JButton btnDeconnexion;
 	static JButton buttonRechercher;
@@ -31,10 +32,8 @@ public class AdminPanel extends JPanel {
 	static JTable table;
 	static JLabel labelError;
 
-	/**
-	 * Create the panel.
-	 * @throws ParseException 
-	 */
+	// Constructeur
+
 	public AdminPanel() throws ParseException {
 		setLayout(null);
 		Patient.initList();
@@ -45,18 +44,9 @@ public class AdminPanel extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int ligneSelectionne = table.getSelectedRow();
-
-				String value = (String) table.getValueAt(ligneSelectionne, 2);
-
-				textFieldNom.setText(defaultTableModel.getValueAt(ligneSelectionne,0).toString());
-				textFieldPrenom.setText(defaultTableModel.getValueAt(ligneSelectionne, 1).toString());
-				textFieldDateDeNaissance.setText(defaultTableModel.getValueAt(ligneSelectionne,2).toString());
-				textFieldNumeroSS.setText(defaultTableModel.getValueAt(ligneSelectionne, 3).toString());
-
+				setFields();
 			}
 		});
-
 		initTab(defaultTableModel, table);
 		
 		labelError = new JLabel();
@@ -195,15 +185,7 @@ public class AdminPanel extends JPanel {
 		background.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int selectedRow = table.getSelectedRow();
-				if (table.getSelectedRow() != -1) {
-					table.clearSelection();
-
-					textFieldNom.setText("");
-					textFieldDateDeNaissance.setText("");
-					textFieldPrenom.setText("");
-					textFieldNumeroSS.setText("");
-				}
+				clearFields();
 			}
 		});
 		background.setIcon(new ImageIcon(AdminPanel.class.getResource("/bgAdminPanel.png")));
@@ -274,7 +256,10 @@ public class AdminPanel extends JPanel {
 
 	}
 
+	// Méthodes
+
 	public void initTab(DefaultTableModel defaultTableModel, JTable table) {
+		// Initialise le tableau
 		defaultTableModel.setRowCount(0);
 		table.revalidate();
 
@@ -291,5 +276,29 @@ public class AdminPanel extends JPanel {
 		}
 
 		defaultTableModel.fireTableDataChanged();
+	}
+
+	public static void setFields() {
+		// Set les fields de la ligne séléctionnée dans le tableau
+		int ligneSelectionne = table.getSelectedRow();
+
+		String value = (String) table.getValueAt(ligneSelectionne, 2);
+
+		textFieldNom.setText(defaultTableModel.getValueAt(ligneSelectionne,0).toString());
+		textFieldPrenom.setText(defaultTableModel.getValueAt(ligneSelectionne, 1).toString());
+		textFieldDateDeNaissance.setText(defaultTableModel.getValueAt(ligneSelectionne,2).toString());
+		textFieldNumeroSS.setText(defaultTableModel.getValueAt(ligneSelectionne, 3).toString());
+	}
+
+	public static void clearFields() {
+		// Clear les fields si une ligne est sélectionnée
+		if (table.getSelectedRow() != -1) {
+			table.clearSelection();
+
+			textFieldNom.setText("");
+			textFieldDateDeNaissance.setText("");
+			textFieldPrenom.setText("");
+			textFieldNumeroSS.setText("");
+		}
 	}
 }

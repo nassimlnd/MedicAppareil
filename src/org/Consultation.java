@@ -297,5 +297,12 @@ public class Consultation {
         initFichier();
     }
 
+    public static void initPatListe() {
+        for (Consultation consultation : Consultation.getListeConsultation()) {
+            Patient patient = consultation.getPatient();
+            patient.ajouterConsultation(consultation);
+        }
+    }
+
 
 }
