@@ -72,6 +72,7 @@ public class Frame extends JFrame {
 					else if (Connexion.connect(type, identifiant, motdepasse) && type.equals("medecin")) {
 						login(loginPanel);
 						initAllList();
+						medecinPanel.initTab(medecinPanel.defaultTableModel, medecinPanel.table);
 						medecinPanel.initCombo(medecinPanel.comboBox);
 						medecinPanel.initPathologies();
 						setContentPane(medecinPanel);
@@ -86,7 +87,7 @@ public class Frame extends JFrame {
 						loginPanel.labelErreur.setForeground(Color.RED);
 					}
 				} catch (AccountNotFoundException ex) {
-					ex.printStackTrace();
+					loginPanel.labelErreur.setForeground(Color.RED);
 				} catch (FileNotFoundException ex) {
 					ex.printStackTrace();
 				}

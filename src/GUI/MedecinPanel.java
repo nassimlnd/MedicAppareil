@@ -166,6 +166,7 @@ public class MedecinPanel extends JPanel {
 					textFieldAppareil.setText("");
 
 					initTab(defaultTableModel, table);
+					labelError.setForeground(Color.white);
 				} catch (EmptyFieldException emptyFieldException) {
 					labelError.setText("Champs incorrects. Veuillez réessayer.");
 					labelError.setForeground(Color.red);
@@ -174,6 +175,10 @@ public class MedecinPanel extends JPanel {
 					labelError.setForeground(Color.red);
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
+				}
+				catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+					labelError.setText("Champs incorrects. Veuillez réessayer.");
+					labelError.setForeground(Color.red);
 				}
 			}
 		});
@@ -204,6 +209,7 @@ public class MedecinPanel extends JPanel {
 				textFieldPathologies.setSelectedIndex(-1);
 				textFieldAppareil.setText("");
 				comboBox.setSelectedIndex(-1);
+				labelError.setForeground(Color.white);
 			}
 		});
 

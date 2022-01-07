@@ -337,12 +337,18 @@ public class Patient {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Fichier inexistant");
+
         }
     }
 
     public void supprimerPatient() {
         // Supprime le patient de la liste de Patient et reinitialise le fichier texte en prenant en compte la nouvelle liste.
+        // Ajout de la suppression des consultations en rapport avec le patient ce qui permet d'éviter l'erreur de l'initialisation de la liste.
+        for (int i = 0; i < Consultation.getListeConsultation().size(); i ++) {
+            if (Consultation.getListeConsultation().get(i).getPatient() == this) {
+                Consultation.getListeConsultation().get(i).supprimerConsultation();
+            }
+        }
         listePatient.remove(this);
         initFichier();
     }

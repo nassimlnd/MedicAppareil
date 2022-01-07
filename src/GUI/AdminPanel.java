@@ -154,6 +154,7 @@ public class AdminPanel extends JPanel {
 					textFieldNumeroSS.setText("");
 
 					initTab(defaultTableModel, table);
+					labelError.setForeground(Color.white);
 				}
 				catch (PatientAlreadyPresentException patientAlreadyPresentException) {
 					labelError.setText("Patient déjà présent. Veuillez vérifier les données du patient.");
@@ -215,6 +216,7 @@ public class AdminPanel extends JPanel {
 				textFieldDateDeNaissance.setText("");
 				textFieldPrenom.setText("");
 				textFieldNumeroSS.setText("");
+				labelError.setForeground(Color.white);
 			}
 		});
 

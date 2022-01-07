@@ -215,7 +215,7 @@ public class Consultation {
                 Patient.getListePatient().get(Integer.parseInt(split[1])).ajouterConsultation(consultation);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Fichier inexistant");
+
         }
     }
 

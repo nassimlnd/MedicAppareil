@@ -15,7 +15,7 @@ public class LoginPanel extends JPanel {
 	static JRadioButton radioButtonAdmin;
 	static JRadioButton radioButtonTechnicien;
 	static JRadioButton radioButtonMedecin;
-	static JLabel labelErreur;
+	public static JLabel labelErreur;
 	static ButtonGroup buttonGroup;
 	static JButton buttonStatistiques;
 
