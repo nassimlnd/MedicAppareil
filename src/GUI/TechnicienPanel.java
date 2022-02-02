@@ -34,7 +34,7 @@ public class TechnicienPanel extends JPanel {
 		Consultation.initList();
 		initList();
 
-		String[] columns = {"Nom du patient", "Nom du m?decin", "Date", "Pathologies diagnostiqu?es", "Appareil","statut" };
+		String[] columns = {"Nom du patient", "Nom du médecin", "Date", "Pathologies diagnostiquées", "Appareil", "Statut"};
 		defaultTableModel = new DefaultTableModel(columns, 0);
 		table = new JTable(defaultTableModel);
 		init(defaultTableModel, table);

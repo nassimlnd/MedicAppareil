@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 public class RechercheMedecin extends JDialog {
 	private JTable table;
 	DefaultTableModel defaultTableModel;
+	public static JComboBox comboBox;
 	public int idCons;
 
 	/**
@@ -32,11 +33,19 @@ public class RechercheMedecin extends JDialog {
 	 */
 	public RechercheMedecin() {
 		setBounds(100, 100, 767, 415);
+		setResizable(false);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		setVisible(true);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		JButton buttonRecherchePatient = new JButton("");
+		buttonRecherchePatient.setBounds(324, 11, 48, 48);
+		buttonRecherchePatient.setIcon(new ImageIcon(RechercheMedecin.class.getResource("/iconRecherche48.png")));
+		buttonRecherchePatient.setBorder(null);
+		buttonRecherchePatient.setBackground(Color.WHITE);
+		getContentPane().add(buttonRecherchePatient);
 		
 		JButton buttonAnnuler = new JButton("");
 		buttonAnnuler.setBounds(634, 331, 88, 33);
@@ -64,7 +73,7 @@ public class RechercheMedecin extends JDialog {
 		for (int i = 0; i < Patient.getListePatient().size(); i ++) {
 			names[i] = Patient.getListePatient().get(i).getNom() + " " + Patient.getListePatient().get(i).getPrenom() + " " + Patient.getListePatient().get(i).getDateNaissance();
 		}
-		JComboBox comboBox = new JComboBox(names);
+		comboBox = new JComboBox(names);
 		comboBox.setFont(new Font("Montserrat", Font.PLAIN, 12));
 		comboBox.setBounds(29, 15, 284, 39);
 		getContentPane().add(comboBox);
@@ -131,6 +140,14 @@ public class RechercheMedecin extends JDialog {
 				MedecinPanel.textFieldNomMedecin.setText(consultation.getNomMedecin());
 				MedecinPanel.textFieldAppareil.setText(consultation.getAppareil());
 				dispose();
+			}
+		});
+
+		buttonRecherchePatient.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PopupRecherche popupRecherche = new PopupRecherche();
+
 			}
 		});
 		

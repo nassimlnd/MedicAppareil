@@ -1,0 +1,2 @@
+1;0;teest;29/01/2022;Pathologies 6;null;false
+2;1;test;29/01/2022;Pathologies 2;test;true

@@ -194,10 +194,11 @@ public class MedecinPanel extends JPanel {
 
 				Consultation consultationmodif = Consultation.getListeConsultation().get(ligneSelectionne);
 
-				if (!appareil.isEmpty()) {
-					consultationmodif.setAppareil(appareil);
+				if (appareil.isEmpty()) {
+					consultationmodif.setAppareil("");
 				}
 
+				consultationmodif.setAppareil(appareil);
 				consultationmodif.setNomMedecin(nomMedecin);
 				consultationmodif.setPathologies(pathologies);
 				consultationmodif.modif();

@@ -1,0 +1,2 @@
+- Suppression des consultations en rapport avec le patient supprimé.
+- Exceptions à la connexion

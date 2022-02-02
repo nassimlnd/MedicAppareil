@@ -264,7 +264,7 @@ public class Consultation {
             fileReader = new FileReader(file.getAbsoluteFile());
             sc = new Scanner(fileReader);
 
-            newLine = this.getId() + ";" + (this.getPatient().getId() - 1) + ";" + this.getNomMedecin() + ";" + this.getDate() + ";"  + this.getPathologies() + ";" + this.getAppareil() + ";" + this.getOctroi();
+            newLine = (this.getId() + 1) + ";" + (this.getPatient().getId() - 1) + ";" + this.getNomMedecin() + ";" + this.getDate() + ";"  + this.getPathologies() + ";" + this.getAppareil() + ";" + this.getOctroi();
 
             while (sc.hasNextLine()) {
 

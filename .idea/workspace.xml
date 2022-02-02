@@ -8,12 +8,11 @@
   <component name="ChangeListManager">
     <list default="true" id="8aa4deb6-3837-47c5-b380-cb39ec1eecb1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/AdminPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/AdminPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/LoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/LoginPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/MedecinPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/MedecinPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/PopupRecherche.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/PopupRecherche.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/RechercheMedecin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/RechercheMedecin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/TechnicienPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/TechnicienPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/Consultation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/Consultation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/Patient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +49,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Dev/SiteWebNSI" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15136719" />
     <property name="project.structure.side.proportion" value="0.2" />
